@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "image": "https://example.com/images/story1.jpg",
+    "headline": "Free Health Checkup Reached 500+ Villagers",
+    "summary": "A successful camp in a rural area provided basic health services to over 500 participants in just two days.",
+    "date": "2024-10-12"
+  },
+  {
+    "id": 2,
+    "image": "https://example.com/images/story2.jpg",
+    "headline": "Diabetes Awareness Camp Saved Lives",
+    "summary": "Early detection and awareness helped multiple people manage their health better after attending the camp.",
+    "date": "2024-11-05"
+  },
+  {
+    "id": 3,
+    "image": "https://example.com/images/story3.jpg",
+    "headline": "Mobile Eye Camp Performed 60+ Cataract Surgeries",
+    "summary": "A joint initiative that restored sight to more than 60 patients for free.",
+    "date": "2025-01-22"
+  }
+]
