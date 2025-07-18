@@ -8,6 +8,7 @@ import AllCamps from "../Pages/AllCamps";
 import Login from "../Authontications/Login";
 import Register from "../Authontications/Register";
 import CampDetails from "../Pages/CampDetails";
+import AddACamp from "../Pages/AddACamp";
 
 export const router = createBrowserRouter([
     {
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
                 path: '/campDetails/:id',
                 element: <CampDetails></CampDetails>,
                 loader: () => fetch(``)
+            },
+            {
+                path: '/addCamp',
+                element: <AddACamp></AddACamp>
             }
         ]
     },

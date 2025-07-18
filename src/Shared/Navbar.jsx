@@ -26,7 +26,7 @@ const Navbar = () => {
     const links = (
         <div className='flex gap-5'>
             <Link to="/" key="home">Home</Link>
-            <Link to="/available-camps" key="availableCamps">Available Camps</Link>
+            <Link to="/allCamps" key="availableCamps">Available Camps</Link>
         </div>
     );
 
