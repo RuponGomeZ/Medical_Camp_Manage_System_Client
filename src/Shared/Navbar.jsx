@@ -2,18 +2,11 @@ import React, { use, useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../Providers/AuthProvider';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import {
-    ArchiveBoxXMarkIcon,
-    ChevronDownIcon,
-    PencilIcon,
-    Square2StackIcon,
-    TrashIcon,
-} from '@heroicons/react/16/solid'
+import { ChevronDownIcon } from '@heroicons/react/16/solid'
+import avatarImg from '../../src/assets/images/placeholder.jpg'
 
 const Navbar = () => {
     const { signOutUser, user } = useContext(AuthContext)
-
-
 
 
     const handleSignOut = () => {
@@ -57,7 +50,14 @@ const Navbar = () => {
                         <div className=" top-24 w-52 text-right">
                             <Menu>
                                 <MenuButton className="inline-flex items-center gap-2  px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner  focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-700 data-open:bg-gray-700">
-                                    <img className='w-16 rounded-full' src={user.photoURL} alt="" />
+                                    <img
+                                        className='rounded-full'
+                                        referrerPolicy='no-referrer'
+                                        src={user && user.photoURL ? user.photoURL : avatarImg}
+                                        alt='profile'
+                                        height='30'
+                                        width='30'
+                                    />
                                     <ChevronDownIcon className="size-4 fill-white/60" />
                                 </MenuButton>
 
@@ -78,6 +78,14 @@ const Navbar = () => {
                                             <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">⌘D</kbd>
                                         </Link>
                                     </MenuItem>
+                                    <div className="my-1 h-px bg-white/5" />
+                                    <MenuItem>
+                                        <Link to={"/addCamp"} className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
+                                            Add A Camp
+                                            <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">⌘A</kbd>
+                                        </Link>
+                                    </MenuItem>
+
                                     <div className="my-1 h-px bg-white/5" />
                                     <MenuItem>
                                         <button onClick={handleSignOut} className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">

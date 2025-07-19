@@ -34,8 +34,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/campDetails/:id',
-                element: <CampDetails></CampDetails>,
-                loader: () => fetch(``)
+                element: <PrivateRoute><CampDetails></CampDetails></PrivateRoute>,
             },
             {
                 path: '/addCamp',

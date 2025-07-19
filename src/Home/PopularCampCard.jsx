@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const PopularCampCard = ({ popularCamp }) => {
-    const { image, campName, campFees, dateTime, location, healthcareProfessional, participantCount } = popularCamp
+    const { image, campName, campFees, dateTime, location, healthcareProfessional, participantCount, _id } = popularCamp
 
     return (
         <div>
@@ -34,7 +35,7 @@ const PopularCampCard = ({ popularCamp }) => {
                         </div>
                     </div>
                     <div className="card-actions justify-center">
-                        <button className="underline font-bold text-blue-300">View Details</button>
+                        <Link to={`/campDetails/${_id}`} className="underline font-bold text-blue-300">View Details</Link>
                     </div>
                 </div>
             </div>

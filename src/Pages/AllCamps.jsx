@@ -1,9 +1,23 @@
 import React from 'react';
-import popularCamps from '../../public/popularCamps.json'
 import PopularCampCard from '../Home/popularCampCard';
 import { Link } from 'react-router-dom';
+import useAxiosPublic from '../hooks/useAxiosPublic';
+import { useQuery } from '@tanstack/react-query';
 
 const AllCamps = () => {
+
+    const axiosPublic = useAxiosPublic()
+
+    const { data: popularCamps = [] } = useQuery({
+        queryKey: ['camps'],
+        queryFn: async () => {
+            const res = await axiosPublic.get('/camps')
+            return res.data
+        }
+
+    })
+
+
     return (
         <div>
             <div className='mt-16'>

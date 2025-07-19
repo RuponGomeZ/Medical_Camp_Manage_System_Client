@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactDOM from "react-dom";
 import { useForm } from "react-hook-form";
 import useAxiosPublic from '../hooks/useAxiosPublic';
@@ -6,10 +6,15 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { AuthContext } from '../Providers/AuthProvider';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const AddACamp = () => {
     const [startDate, setStartDate] = useState(new Date());
     const axiosPublic = useAxiosPublic()
+    const { user } = useContext(AuthContext)
+    const navigate = useNavigate()
 
     const {
         register,
@@ -46,12 +51,16 @@ const AddACamp = () => {
             location: data.location,
             participantCount: 0,
             campFee: parseFloat(data.campFee),
-            healthCareProfessional: data.healthCareProfessional
+            healthCareProfessional: user.displayName,
+            organizerEmail: user.email
         }
 
-        await axiosPublic.post('/addCamp', campInfo)
-
-        console.log(campInfo);
+        const res = await axiosPublic.post('/addCamp', campInfo)
+        if (res.data.insertedId) {
+            toast.success("Camp added successfully!")
+            navigate('/allCamps')
+        }
+        console.log(res);
     };
 
     return (
@@ -74,7 +83,7 @@ const AddACamp = () => {
                 <p>Camp Fee</p>
                 <input type='number' className='text-center w-96 py-2' placeholder='Your Camp fee'  {...register("campFee", { required: true })} />
             </div>
-            {errors.campFee && <p className='text-red-600'>Location field is required</p>}
+            {errors.campFee && <p className='text-red-600'>Camp Fee field is required</p>}
 
 
             {/* register your input into the hook by invoking the "register" function */}
@@ -82,12 +91,11 @@ const AddACamp = () => {
                 <p> Date & Time</p>
                 <DatePicker className='text-center border p-2 rounded-md' selected={startDate} onChange={(date) => setStartDate(date)} required />
             </div>
-            {errors.location && <p className='text-red-600'>Location field is required</p>}
 
 
             {/* register your input into the hook by invoking the "register" function */}
             <div>
-                <p>Enter Your Camp Name</p>
+                <p>Camp location</p>
                 <input className='text-center w-96 py-2' placeholder='Location'  {...register("location", { required: true })} />
             </div>
             {errors.location && <p className='text-red-600'>Location field is required</p>}
@@ -96,7 +104,7 @@ const AddACamp = () => {
             {/* Health Care Professional */}
             <div>
                 <p>Health Care Professional Name</p>
-                <input className='text-center w-96 py-2' placeholder='Health Care Professional'  {...register("healthCareProfessional", { required: true })} />
+                <input className='text-center w-96 py-2' value={user.displayName} placeholder='Health Care Professional'  {...register("healthCareProfessional", { required: true })} />
             </div>
             {errors.healthCareProfessional && <p className='text-red-600'>healthCareProfessional field is required</p>}
 
@@ -108,7 +116,7 @@ const AddACamp = () => {
             </div>
             {errors.description && <p className='text-red-600'>This field is required</p>}
 
-            <input type="submit" />
+            <input className='btn btn-primary w-fit mx-auto' type="submit" />
         </form>
     );
 };
