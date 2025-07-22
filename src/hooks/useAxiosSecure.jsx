@@ -9,29 +9,37 @@ const axiosSecure = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
     withCredentials: true
 })
-
+let toastTimeout = null;
 const useAxiosSecure = () => {
 
     const navigate = useNavigate()
     const { signOutUser } = useContext(AuthContext)
 
     useEffect(() => {
-        res => {
-            return res
-        }
+        axiosSecure.interceptors.response.use(
 
-        async error => {
-            console.log(error);
-            if (error.response.status === 401 || error.response.status === 403) {
-                signOutUser()
-                toast.error('You are not Authorized to do that. Please login again')
-                navigate('/login')
+            res => {
+                return res
+            },
+            async error => {
+                console.log(error);
+                if (error.response.status === 401 || error.response.status === 403) {
+                    signOutUser()
+                    if (!toastTimeout) {
+                        toast.error('You are not authorized to do that. Please login again.');
+                        toastTimeout = setTimeout(() => {
+                            toastTimeout = null;
+                        }, 3000);
+                    }
+                    navigate('/login')
+                }
+                return Promise.reject(error)
             }
-            return Promise.reject(error)
-        }
+        )
 
-    }, [])
+    }, [signOutUser, navigate])
 
+    return axiosSecure
 
 };
 
