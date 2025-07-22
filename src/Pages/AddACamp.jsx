@@ -32,7 +32,7 @@ const AddACamp = () => {
             body: imageFile
         });
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         return data.data.display_url;
 
     };
@@ -60,7 +60,7 @@ const AddACamp = () => {
             toast.success("Camp added successfully!")
             navigate('/allCamps')
         }
-        console.log(res);
+        // console.log(res);
     };
 
     return (
