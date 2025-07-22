@@ -10,6 +10,7 @@ import Register from "../Authontications/Register";
 import CampDetails from "../Pages/CampDetails";
 import AddACamp from "../Pages/AddACamp";
 import PrivateRoute from "./PrivateRoute";
+import ManageCamps from "../Pages/ManageCamps";
 
 export const router = createBrowserRouter([
     {
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
             {
                 path: '/addCamp',
                 element: <PrivateRoute><AddACamp></AddACamp></PrivateRoute>
+            },
+            {
+                path: '/manage-camp',
+                element: <ManageCamps></ManageCamps>
             }
         ]
     },

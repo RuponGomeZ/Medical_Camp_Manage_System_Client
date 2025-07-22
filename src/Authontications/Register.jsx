@@ -39,6 +39,8 @@ const Register = () => {
             await emailSignUp(data.email, data.password);
             await updateUserProfile(data.name, imageUrl);
 
+
+
             toast.success("Register Successful");
             navigate('/');
             setLoading(false)

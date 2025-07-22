@@ -1,7 +1,7 @@
 import React from 'react';
 import Banner from './Banner';
 import datas from '../../public/fake.json'
-import popularCamps from '../../public/popularCamps.json'
+// import popularCamps from '../../public/popularCamps.json'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -9,8 +9,21 @@ import 'swiper/css/pagination';
 import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/modules';
 import PopularCampCard from './popularCampCard';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import useAxiosPublic from '../hooks/useAxiosPublic';
 
 const Home = () => {
+
+    const axiosPublic = useAxiosPublic()
+
+    const { data: popularCamps = [] } = useQuery({
+        queryKey: ['popularCamps'],
+        queryFn: async () => {
+            const response = await axiosPublic.get('/camps')
+            return response.data;
+        }
+    })
+
     return (
         <div>
             <div className='mt-16'>

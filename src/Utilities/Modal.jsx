@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from './LoadingSpinner';
+import { useQueries, useQuery } from '@tanstack/react-query';
 
 
 const Modal = ({ isOpen, setIsOpen, camp }) => {
@@ -31,39 +32,45 @@ const Modal = ({ isOpen, setIsOpen, camp }) => {
         image, campFees, _id
     } = camp;
 
+
+
     const onSubmit = async (data) => {
         setLoading(true)
-        // to do check index.js chatgpt data structure make api
+        const participantData = await axiosPublic.get(`/user/${user.email}`)
 
+        console.log(participantData.data._id);
         const registerInfo = {
             campName: campName,
             campId: _id,
-            //  TODO participantId:
-            participantEmail: data.participantEmail,
-            phone: data.phoneNumber,
-            emergencyContact: data.emergencyContact,
             campFees: campFees,
+            location: data.location,
+            healthcareProfessional: data.healthcareProfessional,
+            participantId: participantData.data._id,
+            participantName: user.displayName,
+            participantEmail: user.email,
+            age: data.age,
+            phone: data.phoneNumber,
+            gender: data.gender,
+            emergencyContact: data.emergencyContact,
 
         }
-
-        const res = await axiosPublic.post('/registrations', registerInfo)
+        const res = await axiosPublic.post(`/registrations/${user.email}`, registerInfo)
         if (res.data.insertedId) {
-            setLoading(false)
+            await axiosPublic.patch(`/registrations-participantCount/${_id}`)
 
-            // TODO patch api to server make participant count +1
 
             setIsOpen(false);
             toast.success(`Successfully Applied to Join ${campName}`)
             navigate('/allCamps')
         }
-        console.log(data);
-
+        else {
+            toast.error(res.data.message)
+        }
+        console.log(res.data.message);
+        setLoading(false)
     };
 
 
-
-
-    // console.log(healthcareProfessional, user.displayName);
 
     return (
         <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
@@ -80,7 +87,7 @@ const Modal = ({ isOpen, setIsOpen, camp }) => {
                         {/* Camp Fee */}
                         <div>
                             <p>Camp Fee</p>
-                            <input type='number' value={campFees} className='text-center w-96 py-2'  {...register("campFee", { required: true })} />
+                            <input type='number' value={campFees} className='text-center w-96 py-2 pointer-events-none'  {...register("campFee", { required: true })} />
                         </div>
 
 
@@ -88,27 +95,27 @@ const Modal = ({ isOpen, setIsOpen, camp }) => {
                         {/* Location */}
                         <div>
                             <p>Camp location</p>
-                            <input className='text-center w-96 py-2' value={location}  {...register("location", { required: true })} />
+                            <input className='text-center w-96 py-2  pointer-events-none' value={location}  {...register("location", { required: true })} />
                         </div>
 
 
                         {/* Health Care Professional */}
                         <div>
                             <p>Health Care Professional Name</p>
-                            <input className='text-center w-96 py-2' value={healthcareProfessional} placeholder='Health Care Professional'  {...register("healthCareProfessional", { required: true })} />
+                            <input className='text-center w-96 py-2  pointer-events-none' value={healthcareProfessional} placeholder='Health Care Professional'  {...register("healthCareProfessional", { required: true })} />
                         </div>
 
                         {/* Participant Name */}
                         <div>
                             <p>Participant Name</p>
-                            <input className='text-center w-96 py-2' value={user?.displayName} placeholder='Health Care Professional'  {...register("participant", { required: true })} />
+                            <input className='text-center w-96 py-2  pointer-events-none' value={user?.displayName} placeholder='Health Care Professional'  {...register("participant", { required: true })} />
                         </div>
 
 
                         {/*Participant Email  */}
                         <div>
                             <p>Participant Email</p>
-                            <input className='text-center w-96 py-2' value={user.email} placeholder='Description'  {...register("participantEmail", { required: true })} />
+                            <input className='text-center w-96 py-2 pointer-events-none' value={user.email} placeholder='Description'  {...register("participantEmail", { required: true })} />
                         </div>
 
 

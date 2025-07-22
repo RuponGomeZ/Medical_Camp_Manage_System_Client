@@ -4,15 +4,19 @@ import { GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '../Authontications/firebase.init';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import useAxiosPublic from '../hooks/useAxiosPublic';
+
 
 export const AuthContext = createContext(null)
 
 const provider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
+    const axiosPublic = useAxiosPublic()
 
     const [user, setUser] = useState([])
     const [loading, setLoading] = useState(false);
+
 
     const googleLogin = () => {
         setLoading(true)
@@ -63,12 +67,20 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async currentUser => {
             if (currentUser?.email) {
+
+
                 setUser(currentUser)
                 console.log(currentUser);
                 await axios.post('http://localhost:5000/jwt',
                     { email: currentUser?.email },
                     { withCredentials: true }
                 )
+                const userInfo = {
+                    email: currentUser.email,
+                }
+
+                await axiosPublic.post('/users', userInfo)
+
             } else {
                 setUser(currentUser)
                 await axios.get('http://localhost:5000/logout', {

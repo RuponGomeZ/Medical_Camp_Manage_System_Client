@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 import { useParams } from 'react-router-dom';
@@ -8,11 +8,22 @@ import { GrGroup } from "react-icons/gr";
 import { FaUserDoctor } from "react-icons/fa6";
 import { format } from "date-fns";
 import Modal from '../Utilities/Modal';
+import { AuthContext } from '../Providers/AuthProvider';
 
 const CampDetails = () => {
     const { id } = useParams();
     const axiosPublic = useAxiosPublic();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { user } = useContext(AuthContext)
+
+    const { data: isApplied = [] } = useQuery({
+        queryKey: ['applied', user?.email, id],
+        queryFn: async () => {
+            const response = await axiosPublic.get(`/registrations/${user.email}?campId=${id}`);
+            return response.data; // Return only the data property
+        }
+    });
+    console.log(isApplied.length); // This will now log the actual data
 
     const { data: camp = {}, isLoading } = useQuery({
         queryKey: ['camp'],
@@ -27,15 +38,16 @@ const CampDetails = () => {
     const {
         campName, dateTime, location,
         healthcareProfessional, participantCount,
-        image, campFees, description
+        image, campFees, description, _id
     } = camp;
 
-
+    console.log(id);
     return (
         <div className="hero bg-base-200 min-h-screen">
             <div className="hero-content flex-col lg:flex-row">
                 <img
-                    src={image || "https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"}
+                    referrerPolicy='no-referrer'
+                    src={image}
                     className="max-w-sm rounded-lg shadow-2xl"
                 />
                 <div className='justify-start items-start text-left'>
@@ -47,7 +59,7 @@ const CampDetails = () => {
                     <p className="flex gap-2"><span className='font-bold'>Health Care Professional:</span> <FaUserDoctor />{healthcareProfessional}</p>
                     <p className="flex gap-2 items-center"> <span className='font-bold'>Participants: </span> <GrGroup />{participantCount}</p>
 
-                    <button className="btn btn-primary mt-5" onClick={() => setIsModalOpen(true)}>Join Camp</button>
+                    <button className={`btn btn-primary mt-5 `} onClick={() => setIsModalOpen(true)} disabled={isApplied.length > 0}>Join Camp</button>
 
                     <Modal
                         isOpen={isModalOpen}
