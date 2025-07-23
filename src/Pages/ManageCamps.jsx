@@ -13,7 +13,7 @@ const ManageCamps = () => {
     const axiosSecure = useAxiosSecure()
     const { user } = useContext(AuthContext)
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const [selectedCamp, setSelectedCamp] = useState(null);
 
     const { data: manageCamps = [], refetch, isLoading } = useQuery({
         queryKey: ['manageCamps', user.email],
@@ -39,7 +39,7 @@ const ManageCamps = () => {
             confirmButtonText: "Yes, delete it!"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const res = await axiosSecure.delete(`/update-camp/${id}`)
+                const res = await axiosSecure.delete(`/delete-camp/${id}`)
                 if (res.data.deletedCount) {
                     Swal.fire({
                         title: "Deleted!",
@@ -70,34 +70,44 @@ const ManageCamps = () => {
                     <tbody>
 
                         {
-                            manageCamps.map((manageCamp, i) => <tr key={manageCamp._id}>
-                                <td>{i + 1}</td>
-                                <th>{manageCamp.campName}</th>
-                                <td>{
-                                    (() => {
-                                        const d = new Date(manageCamp.date);
-                                        const date = d.toLocaleDateString('en-GB').replace(/\//g, '-');
-                                        return `${date}`;
-                                    })()
-                                }</td>
-                                <td>{manageCamp.location}</td>
-                                <td>{manageCamp.healthCareProfessional}</td>
-                                <td className='flex gap-3'>
-                                    <button onClick={() => setIsModalOpen(true)}>Edit</button>
-                                    <button onClick={() => handleDelete(manageCamp._id, manageCamp.campName)}>Delete</button>
-                                </td>
-                                <UpdateCampModal
-                                    isOpen={isModalOpen}
-                                    setIsOpen={setIsModalOpen}
-                                    manageCamp={manageCamp}
-                                />
-                            </tr>
+                            manageCamps.map((manageCamp, i) =>
+                                <tr key={manageCamp._id}>
+                                    <td>{i + 1}</td>
+                                    <th>{manageCamp.campName}</th>
+                                    <td>{
+                                        (() => {
+                                            const d = new Date(manageCamp.date);
+                                            const date = d.toLocaleDateString('en-GB').replace(/\//g, '-');
+                                            return `${date}`;
+                                        })()
+                                    }</td>
+                                    <td>{manageCamp.location}</td>
+                                    <td>{manageCamp.healthCareProfessional}</td>
+                                    <td className='flex gap-3'>
+                                        <button onClick={() => {
+                                            setIsModalOpen(true);
+                                            setSelectedCamp(manageCamp);
+                                        }}>
+                                            Edit
+                                        </button>
+                                        <button onClick={() => handleDelete(manageCamp._id, manageCamp.campName)}>Delete</button>
+                                    </td>
+                                </tr>
+
                             )
                         }
 
                     </tbody>
                 </table>
             </div>
+            {isModalOpen && selectedCamp && (
+                <UpdateCampModal
+                    isOpen={isModalOpen}
+                    setIsOpen={setIsModalOpen}
+                    manageCamp={selectedCamp}
+                    refetch={refetch}
+                />
+            )}
         </div>
     );
 };

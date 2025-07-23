@@ -11,12 +11,14 @@ import LoadingSpinner from './LoadingSpinner';
 
 
 
-const UpdateCampModal = ({ isOpen, setIsOpen, manageCamp }) => {
+
+const UpdateCampModal = ({ isOpen, setIsOpen, manageCamp, refetch }) => {
     const axiosPublic = useAxiosPublic()
     const navigate = useNavigate()
     const { user, loading, setLoading } = useContext(AuthContext)
+    const [startDate, setStartDate] = useState(new Date());
 
-    if (loading) return <LoadingSpinner />
+
 
     const {
         register,
@@ -26,127 +28,121 @@ const UpdateCampModal = ({ isOpen, setIsOpen, manageCamp }) => {
     } = useForm();
 
     const {
-        campName, dateTime, location,
-        healthcareProfessional, participantCount,
-        image, campFees, _id
+        campName,
+        dateTime,
+        location,
+        healthCareProfessional,
+        campFee,
+        _id, image
     } = manageCamp;
 
+    const image_hosting_key = import.meta.env.VITE_IMG_API_KEY
+    const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
+
+    const imgUpload = async (imageFile) => {
+        const response = await fetch(image_hosting_api, {
+            method: 'POST',
+            body: imageFile
+        });
+        const data = await response.json();
+        // console.log(data);
+        return data.data.display_url;
+
+    };
 
     const onSubmit = async (data) => {
-        // setLoading(true)
-        // const participantData = await axiosPublic.get(`/user/${user.email}`)
+        setLoading(true)
 
-        // console.log(participantData.data._id);
-        // const registerInfo = {
-        //     campName: campName,
-        //     campId: _id,
-        //     campFees: campFees,
-        //     location: data.location,
-        //     healthcareProfessional: data.healthcareProfessional,
-        //     participantId: participantData.data._id,
-        //     participantName: user.displayName,
-        //     participantEmail: user.email,
-        //     age: data.age,
-        //     phone: data.phoneNumber,
-        //     gender: data.gender,
-        //     emergencyContact: data.emergencyContact,
+        let imageUrl;
+        if (data.image?.[0]) {
+            const imageFile = new FormData();
+            imageFile.append('image', data.image[0]);
+            imageUrl = await imgUpload(imageFile);
+        }
 
-        // }
-        // const res = await axiosPublic.post(`/registrations/${user.email}`, registerInfo)
-        // if (res.data.insertedId) {
-        //     await axiosPublic.patch(`/registrations-participantCount/${_id}`)
+        const campInfo = {
+            campName: data.campName,
+            date: startDate,
+            description: data.description,
+            image: imageUrl || image,
+            location: data.location,
+            campFee: parseFloat(data.campFee),
+            healthCareProfessional: user.displayName,
+        }
 
+        const res = await axiosPublic.patch(`/update-camp/${_id}`, campInfo, {
+            withCredentials: true
+        })
+        if (res.data.modifiedCount) {
+            console.log(res.data.modifiedCount);
+            setIsOpen(false);
+            toast.success(`Successfully updated ${campName}`)
+            setLoading(false)
+            refetch()
+        }
+        else {
+            toast.error(res.data.message)
+            setLoading(false)
 
-        //     setIsOpen(false);
-        //     toast.success(`Successfully Applied to Join ${campName}`)
-        //     navigate('/allCamps')
-        // }
-        // else {
-        //     toast.error(res.data.message)
-        // }
-        // console.log(res.data.message);
-        // setLoading(false)
+        }
+
     };
+
+    if (loading) return <LoadingSpinner />
 
     return (
         <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
             <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
 
             <div className="fixed inset-0 flex items-center justify-center p-4">
-                <Dialog.Panel className=" w-full max-w-fit rounded bg-gray-600 p-3 ml-6 shadow-lg">
+                {/* <Dialog.Panel className=" w-full max-w-fit rounded bg-gray-600 p-3 ml-6 shadow-lg"> */}
+                <Dialog.Panel className="w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded bg-gray-600 p-3 ml-6 shadow-lg">
 
                     <form className='flex flex-col   mx-auto  gap-5 text-center px-4'
                         onSubmit={handleSubmit(onSubmit)}
                     >
-                        <h3 className='font-bold text-3xl'>{campName}</h3>
+                        <h3 className='font-bold text-3xl'>Update your Camp details for {campName}</h3>
+
+                        {/* Camp name */}
+                        <div>
+                            <p>Camp Name</p>
+                            <input className='text-center w-96 py-2  ' defaultValue={campName}  {...register("campName", { required: true })} />
+                        </div>
+
+
+                        {/* Image */}
+                        <p>Upload Image</p>
+                        <div className=' w-full '>
+                            <input {...register('image')} type="file" className="file-input file-input-ghost" />
+                        </div>
+
 
                         {/* Camp Fee */}
                         <div>
                             <p>Camp Fee</p>
-                            <input type='number' value={campFees} className='text-center w-96 py-2 pointer-events-none'  {...register("campFee", { required: true })} />
+                            <input type='number' defaultValue={campFee} className='text-center w-96 py-2 '  {...register("campFee", { required: true })} />
                         </div>
 
-
+                        <DatePicker
+                            className="text-center border p-2 rounded-md"
+                            selected={dateTime ? new Date(dateTime) : startDate} // Convert dateTime to a Date object or use fallback
+                            onChange={(date) => setStartDate(date)}
+                            required
+                        />
 
                         {/* Location */}
                         <div>
                             <p>Camp location</p>
-                            <input className='text-center w-96 py-2  pointer-events-none' value={location}  {...register("location", { required: true })} />
+                            <input className='text-center w-96 py-2  ' defaultValue={location}  {...register("location", { required: true })} />
                         </div>
 
 
                         {/* Health Care Professional */}
                         <div>
                             <p>Health Care Professional Name</p>
-                            <input className='text-center w-96 py-2  pointer-events-none' value={healthcareProfessional} placeholder='Health Care Professional'  {...register("healthCareProfessional", { required: true })} />
+                            <input className='text-center w-96 py-2  ' defaultValue={healthCareProfessional} placeholder='Health Care Professional'  {...register("healthCareProfessional", { required: true })} />
                         </div>
 
-                        {/* Participant Name */}
-                        <div>
-                            <p>Participant Name</p>
-                            <input className='text-center w-96 py-2  pointer-events-none' value={user?.displayName} placeholder='Health Care Professional'  {...register("participant", { required: true })} />
-                        </div>
-
-
-                        {/*Participant Email  */}
-                        <div>
-                            <p>Participant Email</p>
-                            <input className='text-center w-96 py-2 pointer-events-none' value={user.email} placeholder='Description'  {...register("participantEmail", { required: true })} />
-                        </div>
-
-
-                        {/* Age */}
-                        <div>
-                            <p>Your Age</p>
-                            <input className='text-center w-96 py-2' type='number' placeholder='Your Age'  {...register("age", { required: true })} />
-                        </div>
-
-
-                        {/*Phone Number  */}
-                        <div>
-                            <p>Your Phone Number</p>
-                            <input className='text-center w-96 py-2' placeholder='Your Phone Number'  {...register("phoneNumber", { required: true })} />
-                        </div>
-
-
-                        {/* Gender */}
-                        <div>
-                            <p> Select Your Gender</p>
-                            <select className='text-center w-96 py-2' {...register("gender")}>
-                                <option value="female">female</option>
-                                <option value="male">male</option>
-                                <option value="other">other</option>
-                            </select>
-                        </div>
-
-
-                        {/*Emergency Contact  */}
-                        <div>
-                            <p>Emergency Contact </p>
-                            <input className='text-center w-96 py-2'
-                                type='number'
-                                placeholder='Emergency Contact '  {...register("emergencyContact ", { required: true })} />
-                        </div>
 
 
 

@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 const AddACamp = () => {
     const [startDate, setStartDate] = useState(new Date());
     const axiosPublic = useAxiosPublic()
-    const { user } = useContext(AuthContext)
+    const { user, setLoading } = useContext(AuthContext)
     const navigate = useNavigate()
 
     const {
@@ -38,6 +38,7 @@ const AddACamp = () => {
     };
 
     const onSubmit = async (data) => {
+        setLoading(true)
         const imageFile = new FormData();
         imageFile.append('image', data.image[0]);
 
@@ -61,6 +62,7 @@ const AddACamp = () => {
             navigate('/allCamps')
         }
         // console.log(res);
+        setLoading(false)
     };
 
     return (
