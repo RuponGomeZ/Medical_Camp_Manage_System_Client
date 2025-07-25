@@ -45,7 +45,6 @@ const UpdateCampModal = ({ isOpen, setIsOpen, manageCamp, refetch }) => {
             body: imageFile
         });
         const data = await response.json();
-        // console.log(data);
         return data.data.display_url;
 
     };
@@ -95,7 +94,6 @@ const UpdateCampModal = ({ isOpen, setIsOpen, manageCamp, refetch }) => {
             <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
 
             <div className="fixed inset-0 flex items-center justify-center p-4">
-                {/* <Dialog.Panel className=" w-full max-w-fit rounded bg-gray-600 p-3 ml-6 shadow-lg"> */}
                 <Dialog.Panel className="w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded bg-gray-600 p-3 ml-6 shadow-lg">
 
                     <form className='flex flex-col   mx-auto  gap-5 text-center px-4'
@@ -123,9 +121,11 @@ const UpdateCampModal = ({ isOpen, setIsOpen, manageCamp, refetch }) => {
                             <input type='number' defaultValue={campFee} className='text-center w-96 py-2 '  {...register("campFee", { required: true })} />
                         </div>
 
+
+                        {/* Date */}
                         <DatePicker
                             className="text-center border p-2 rounded-md"
-                            selected={dateTime ? new Date(dateTime) : startDate} // Convert dateTime to a Date object or use fallback
+                            selected={dateTime ? new Date(dateTime) : startDate}
                             onChange={(date) => setStartDate(date)}
                             required
                         />

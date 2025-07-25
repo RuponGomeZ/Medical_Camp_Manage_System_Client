@@ -4,6 +4,7 @@ import { AuthContext } from '../Providers/AuthProvider';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import avatarImg from '../../src/assets/images/placeholder.jpg'
+import Dashboard from '../layouts/Dashboard';
 
 const Navbar = () => {
     const { signOutUser, user } = useContext(AuthContext)
@@ -74,18 +75,13 @@ const Navbar = () => {
                                         </p>
                                     </MenuItem>
                                     <MenuItem>
-                                        <Link to={"/dashboard"} className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
+                                        <Link to={"/dashboard"} className="group flex w-full  items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
                                             Dashboard
                                             <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">⌘D</kbd>
                                         </Link>
                                     </MenuItem>
                                     <div className="my-1 h-px bg-white/5" />
-                                    <MenuItem>
-                                        <Link to={"/addCamp"} className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
-                                            Add A Camp
-                                            <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">⌘A</kbd>
-                                        </Link>
-                                    </MenuItem>
+
 
                                     <div className="my-1 h-px bg-white/5" />
                                     <MenuItem>
