@@ -27,14 +27,16 @@ const UpdateCampModal = ({ isOpen, setIsOpen, manageCamp, refetch }) => {
         formState: { errors }
     } = useForm();
 
+    console.log(manageCamp);
     const {
-        campName,
+        // campName,
         dateTime,
         location,
         healthCareProfessional,
         campFee,
         _id, image
     } = manageCamp;
+
 
     const image_hosting_key = import.meta.env.VITE_IMG_API_KEY
     const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`

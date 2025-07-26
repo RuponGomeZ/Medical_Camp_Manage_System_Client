@@ -14,6 +14,7 @@ const ManageCamps = () => {
     const { user } = useContext(AuthContext)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedCamp, setSelectedCamp] = useState(null);
+    console.log(selectedCamp);
 
     const { data: manageCamps = [], refetch, isLoading } = useQuery({
         queryKey: ['manageCamps', user.email],

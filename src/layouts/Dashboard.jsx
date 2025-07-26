@@ -1,8 +1,9 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { CgProfile } from "react-icons/cg";
 import { FaUserCircle } from 'react-icons/fa';
 import { MdAutoFixHigh, MdCampaign, MdOutlineGpsFixed } from "react-icons/md";
+import { IoHome } from "react-icons/io5";
+
 
 
 const Dashboard = () => {
@@ -16,6 +17,9 @@ const Dashboard = () => {
                     <li><NavLink to={"/dashboard/manageRegisteredCamp"}><MdOutlineGpsFixed />Manage Registered Camps</NavLink></li>
                 </ul>
                 <div className="divider"></div>
+                <ul className='menu p-4'>
+                    <li><NavLink to={"/"}> <IoHome />Home</NavLink></li>
+                </ul>
             </div>
             <div className='flex items-center mx-auto text-center container'>
                 <Outlet></Outlet>

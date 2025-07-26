@@ -7,7 +7,6 @@ import { FaDollarSign, FaMapMarkerAlt } from "react-icons/fa";
 import { GrGroup } from "react-icons/gr";
 import { FaUserDoctor } from "react-icons/fa6";
 import { format } from "date-fns";
-import Modal from '../Utilities/Modal';
 import { AuthContext } from '../Providers/AuthProvider';
 
 const CampDetails = () => {
@@ -23,7 +22,6 @@ const CampDetails = () => {
             return response.data; // Return only the data property
         }
     });
-    console.log(isApplied.length); // This will now log the actual data
 
     const { data: camp = {}, isLoading } = useQuery({
         queryKey: ['camp'],
@@ -41,7 +39,6 @@ const CampDetails = () => {
         image, campFees, description, _id
     } = camp;
 
-    console.log(id);
     return (
         <div className="hero bg-base-200 min-h-screen">
             <div className="hero-content flex-col lg:flex-row">
@@ -61,7 +58,7 @@ const CampDetails = () => {
 
                     <button className={`btn btn-primary mt-5 `} onClick={() => setIsModalOpen(true)} disabled={isApplied.length > 0}>Join Camp</button>
 
-                    <Modal
+                    <JoinCampModal
                         isOpen={isModalOpen}
                         setIsOpen={setIsModalOpen}
                         camp={camp}
