@@ -55,7 +55,8 @@ const ManageCamps = () => {
 
     return (
         <div>
-            <div className="overflow-x-auto">
+            <h2 className='font-bold text-3xl mb-16'>Manage Camps </h2>
+            <div className="overflow-x-auto ml-16">
                 <table className="table table-zebra">
                     {/* head */}
                     <thead>

@@ -8,6 +8,7 @@ import { GrGroup } from "react-icons/gr";
 import { FaUserDoctor } from "react-icons/fa6";
 import { format } from "date-fns";
 import { AuthContext } from '../Providers/AuthProvider';
+import Modal from '../Utilities/Modal';
 
 const CampDetails = () => {
     const { id } = useParams();
@@ -58,7 +59,7 @@ const CampDetails = () => {
 
                     <button className={`btn btn-primary mt-5 `} onClick={() => setIsModalOpen(true)} disabled={isApplied.length > 0}>Join Camp</button>
 
-                    <JoinCampModal
+                    <Modal
                         isOpen={isModalOpen}
                         setIsOpen={setIsModalOpen}
                         camp={camp}

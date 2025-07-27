@@ -1,16 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 import { AuthContext } from '../Providers/AuthProvider';
 import { useForm } from "react-hook-form";
 import LoadingSpinner from './LoadingSpinner';
 import { Dialog } from '@headlessui/react';
+import { toast } from 'react-toastify';
 
 
-const UpdateProfileModal = ({ isOpen, setIsOpen, }) => {
+const UpdateProfileModal = ({ isOpen, setIsOpen, userId, refetch }) => {
 
     const axiosPublic = useAxiosPublic()
     const { user, loading, setLoading, updateUserProfile } = useContext(AuthContext)
 
+    if (!userId) {
+        refetch()
+    }
+
+    console.log(userId);
 
     const {
         register,
@@ -19,13 +25,26 @@ const UpdateProfileModal = ({ isOpen, setIsOpen, }) => {
         formState: { errors }
     } = useForm();
 
+    const image_hosting_key = import.meta.env.VITE_IMG_API_KEY
+    const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
 
 
+
+
+    const imgUpload = async (imageFile) => {
+        const response = await fetch(image_hosting_api, {
+            method: 'POST',
+            body: imageFile
+        });
+        const data = await response.json();
+        return data.data.display_url;
+
+    };
 
 
     const onSubmit = async (data) => {
         setLoading(true)
-        let imageUrl;
+        let imageUrl = user?.photoURL;
         if (data.image?.[0]) {
             const imageFile = new FormData();
             imageFile.append('image', data.image[0]);
@@ -35,33 +54,30 @@ const UpdateProfileModal = ({ isOpen, setIsOpen, }) => {
         const campInfo = {
             displayName: data.name,
             email: data.email,
-            phoneNumber: data.phoneNumber,
             photoURL: imageUrl,
+            ...(data.phoneNumber && { Contact: data.phoneNumber }),
         }
 
-        updateUserProfile(data.displayName, imageUrl, data.phoneNumber)
-            .then(res => {
-                console.log(res);
+
+        updateUserProfile(data.name, imageUrl)
+            .then(async () => {
+                const response = await axiosPublic.patch(`/users/${userId._id}`, campInfo)
+                console.log(response.data);
+                if (response.data.modifiedCount) {
+                    toast.success("Profile Updated Successfully")
+                    setLoading(false)
+                    refetch()
+                    setIsOpen(false)
+                }
+
             })
             .catch(error => {
                 console.log(error)
+                toast.error("Something went wrong!")
+                setLoading(false)
+                setIsOpen(false)
+
             })
-
-
-
-        // if (res.data.modifiedCount) {
-        //     console.log(res.data.modifiedCount);
-        //     setIsOpen(false);
-        //     toast.success(`Successfully updated ${campName}`)
-        //     setLoading(false)
-        //     refetch()
-        // }
-        // else {
-        //     toast.error(res.data.message)
-
-        // }
-        setLoading(false)
-
     };
 
     if (loading) return <LoadingSpinner />

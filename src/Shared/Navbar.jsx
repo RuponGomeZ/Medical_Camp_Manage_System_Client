@@ -75,7 +75,7 @@ const Navbar = () => {
                                         </p>
                                     </MenuItem>
                                     <MenuItem>
-                                        <Link to={"/dashboard"} className="group flex w-full  items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
+                                        <Link to={"/dashboard/profile"} className="group flex w-full  items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
                                             Dashboard
                                             <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">⌘D</kbd>
                                         </Link>

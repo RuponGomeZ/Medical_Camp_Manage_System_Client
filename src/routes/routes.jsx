@@ -13,6 +13,7 @@ import PrivateRoute from "./PrivateRoute";
 import ManageCamps from "../Pages/ManageCamps";
 import Dashboard from "../layouts/Dashboard";
 import Profile from "../Pages/Profile";
+import ManageRegisteredCamps from "../Pages/ManageRegisteredCamps";
 
 export const router = createBrowserRouter([
     {
@@ -40,10 +41,6 @@ export const router = createBrowserRouter([
                 element: <PrivateRoute><CampDetails></CampDetails></PrivateRoute>,
             },
 
-            {
-                path: '/manage-camp',
-                element: <ManageCamps></ManageCamps>
-            },
         ],
     },
     {
@@ -53,9 +50,18 @@ export const router = createBrowserRouter([
             {
                 path: 'addCamp',
                 element: <AddACamp></AddACamp>
-            }, {
+            },
+            {
                 path: 'profile',
                 element: <Profile></Profile>
+            },
+            {
+                path: 'manage-camp',
+                element: <ManageCamps></ManageCamps>
+            },
+            {
+                path: 'manage-registered-camps',
+                element: <ManageRegisteredCamps></ManageRegisteredCamps>
             }
         ]
     }

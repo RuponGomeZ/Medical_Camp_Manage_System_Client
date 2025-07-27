@@ -29,7 +29,7 @@ const UpdateCampModal = ({ isOpen, setIsOpen, manageCamp, refetch }) => {
 
     console.log(manageCamp);
     const {
-        // campName,
+        campName,
         dateTime,
         location,
         healthCareProfessional,
