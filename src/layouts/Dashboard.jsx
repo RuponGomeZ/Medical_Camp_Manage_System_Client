@@ -14,7 +14,7 @@ const Dashboard = () => {
                     <li><NavLink to={"/dashboard/profile"}><FaUserCircle />Profile</NavLink></li>
                     <li><NavLink to={"/dashboard/addCamp"}><MdCampaign className='text-xl' />Add a Camp</NavLink></li>
                     <li><NavLink to={"/dashboard/manage-camp"}><MdAutoFixHigh className='text-lg' />Manage Camps</NavLink></li>
-                    <li><NavLink to={"/dashboard/manageRegisteredCamp"}><MdOutlineGpsFixed />Manage Registered Camps</NavLink></li>
+                    <li><NavLink to={"/dashboard/manage-registered-camps"}><MdOutlineGpsFixed />Manage Registered Camps</NavLink></li>
                 </ul>
                 <div className="divider"></div>
                 <ul className='menu p-4'>

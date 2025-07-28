@@ -29,9 +29,8 @@ const Modal = ({ isOpen, setIsOpen, camp }) => {
     const {
         campName, dateTime, location,
         healthcareProfessional, participantCount,
-        image, campFees, _id
+        image, campFees, _id,
     } = camp;
-
 
 
     const onSubmit = async (data) => {
@@ -52,6 +51,8 @@ const Modal = ({ isOpen, setIsOpen, camp }) => {
             phone: data.phoneNumber,
             gender: data.gender,
             emergencyContact: data.emergencyContact,
+            confirmationStatus: "pending",
+            paymentStatus: "unpaid",
 
         }
         const res = await axiosPublic.post(`/registrations/${user.email}`, registerInfo)

@@ -20,10 +20,11 @@ const CampDetails = () => {
         queryKey: ['applied', user?.email, id],
         queryFn: async () => {
             const response = await axiosPublic.get(`/registrations/${user.email}?campId=${id}`);
-            return response.data; // Return only the data property
+            return response.data;
         }
     });
 
+    console.log(isApplied);
     const { data: camp = {}, isLoading } = useQuery({
         queryKey: ['camp'],
         queryFn: async () => {
@@ -37,8 +38,10 @@ const CampDetails = () => {
     const {
         campName, dateTime, location,
         healthcareProfessional, participantCount,
-        image, campFees, description, _id
+        image, campFees, description, _id, organizerEmail
     } = camp;
+
+    console.log(organizerEmail);
 
     return (
         <div className="hero bg-base-200 min-h-screen">
@@ -51,13 +54,12 @@ const CampDetails = () => {
                 <div className='justify-start items-start text-left'>
                     <h1 className="text-5xl font-bold ">{campName}</h1>
                     <p className="flex gap-3"><span className='font-bold'>Camp Fee:</span> <span className='flex items-center'><FaDollarSign />{campFees}</span></p>
-                    {/* <p><span className='font-bold'>Date & Time:</span> {format(new Date(dateTime), "dd/MM/yyyy")}</p> */}
                     <p>{description}</p>
                     <p className="flex gap-3 items-center"><span className='flex font-bold'>Location: </span><FaMapMarkerAlt />{location}</p>
                     <p className="flex gap-2"><span className='font-bold'>Health Care Professional:</span> <FaUserDoctor />{healthcareProfessional}</p>
                     <p className="flex gap-2 items-center"> <span className='font-bold'>Participants: </span> <GrGroup />{participantCount}</p>
 
-                    <button className={`btn btn-primary mt-5 `} onClick={() => setIsModalOpen(true)} disabled={isApplied.length > 0}>Join Camp</button>
+                    <button className={`btn btn-primary mt-5 `} onClick={() => setIsModalOpen(true)} disabled={isApplied.length > 0 || organizerEmail === user.email}>Join Camp</button>
 
                     <Modal
                         isOpen={isModalOpen}
