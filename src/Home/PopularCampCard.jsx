@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const PopularCampCard = ({ popularCamp }) => {
-    const { image, campName, campFees, dateTime, location, healthcareProfessional, participantCount, _id } = popularCamp
+    const { image, campName, campFees, dateTime, location, healthCareProfessional, participantCount, _id } = popularCamp
 
     return (
         <div>
@@ -28,7 +28,7 @@ const PopularCampCard = ({ popularCamp }) => {
                                 return `${date} ${time}`;
                             })()
                         }</p>
-                        <p><span className='font-bold'>Healthcare Professional</span> : {healthcareProfessional}</p>
+                        <p><span className='font-bold'>Healthcare Professional</span> : {healthCareProfessional}</p>
                         <div className='flex mt-7'>
                             <p><span className='font-bold'>Camp Fee</span> : {campFees}</p>
                             <p><span className='font-bold'>Participants:</span>  {participantCount}</p>

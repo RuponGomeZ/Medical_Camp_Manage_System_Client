@@ -9,6 +9,7 @@ import { FaUserDoctor } from "react-icons/fa6";
 import { format } from "date-fns";
 import { AuthContext } from '../Providers/AuthProvider';
 import Modal from '../Utilities/Modal';
+import placeHolder from '../assets/images/placeholder.jpg'
 
 const CampDetails = () => {
     const { id } = useParams();
@@ -24,7 +25,6 @@ const CampDetails = () => {
         }
     });
 
-    console.log(isApplied);
     const { data: camp = {}, isLoading } = useQuery({
         queryKey: ['camp'],
         queryFn: async () => {
@@ -37,18 +37,18 @@ const CampDetails = () => {
 
     const {
         campName, dateTime, location,
-        healthcareProfessional, participantCount,
+        healthCareProfessional, participantCount,
         image, campFees, description, _id, organizerEmail
     } = camp;
 
-    console.log(organizerEmail);
+    console.log(camp);
 
     return (
         <div className="hero bg-base-200 min-h-screen">
             <div className="hero-content flex-col lg:flex-row">
                 <img
                     referrerPolicy='no-referrer'
-                    src={image}
+                    src={image || placeHolder}
                     className="max-w-sm rounded-lg shadow-2xl"
                 />
                 <div className='justify-start items-start text-left'>
@@ -56,7 +56,7 @@ const CampDetails = () => {
                     <p className="flex gap-3"><span className='font-bold'>Camp Fee:</span> <span className='flex items-center'><FaDollarSign />{campFees}</span></p>
                     <p>{description}</p>
                     <p className="flex gap-3 items-center"><span className='flex font-bold'>Location: </span><FaMapMarkerAlt />{location}</p>
-                    <p className="flex gap-2"><span className='font-bold'>Health Care Professional:</span> <FaUserDoctor />{healthcareProfessional}</p>
+                    <p className="flex gap-2"><span className='font-bold'>Health Care Professional:</span> <FaUserDoctor />{healthCareProfessional}</p>
                     <p className="flex gap-2 items-center"> <span className='font-bold'>Participants: </span> <GrGroup />{participantCount}</p>
 
                     <button className={`btn btn-primary mt-5 `} onClick={() => setIsModalOpen(true)} disabled={isApplied.length > 0 || organizerEmail === user.email}>Join Camp</button>

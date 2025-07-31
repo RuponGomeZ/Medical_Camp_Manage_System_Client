@@ -33,7 +33,7 @@ const UpdateCampModal = ({ isOpen, setIsOpen, manageCamp, refetch }) => {
         dateTime,
         location,
         healthCareProfessional,
-        campFee,
+        campFees,
         _id, image
     } = manageCamp;
 
@@ -67,7 +67,7 @@ const UpdateCampModal = ({ isOpen, setIsOpen, manageCamp, refetch }) => {
             description: data.description,
             image: imageUrl || image,
             location: data.location,
-            campFee: parseFloat(data.campFee),
+            campFees: parseFloat(data.campFees),
             healthCareProfessional: user.displayName,
         }
 
@@ -120,7 +120,7 @@ const UpdateCampModal = ({ isOpen, setIsOpen, manageCamp, refetch }) => {
                         {/* Camp Fee */}
                         <div>
                             <p>Camp Fee</p>
-                            <input type='number' defaultValue={campFee} className='text-center w-96 py-2 '  {...register("campFee", { required: true })} />
+                            <input type='number' defaultValue={campFees} className='text-center w-96 py-2 '  {...register("campFees", { required: true })} />
                         </div>
 
 

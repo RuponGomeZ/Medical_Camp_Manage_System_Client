@@ -14,11 +14,13 @@ import ManageCamps from "../Pages/ManageCamps";
 import Dashboard from "../layouts/Dashboard";
 import Profile from "../Pages/Profile";
 import ManageRegisteredCamps from "../Pages/ManageRegisteredCamps";
+import ErrorPage from "../Pages/ErrorPage";
 
 export const router = createBrowserRouter([
     {
         path: '/',
         element: <MainLayouts></MainLayouts>,
+        errorElement: <ErrorPage />,
         children: [
             {
                 path: '/',

@@ -16,7 +16,6 @@ const UpdateProfileModal = ({ isOpen, setIsOpen, userId, refetch }) => {
         refetch()
     }
 
-    console.log(userId);
 
     const {
         register,

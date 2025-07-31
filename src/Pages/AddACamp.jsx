@@ -51,7 +51,7 @@ const AddACamp = () => {
             image: imageUrl,
             location: data.location,
             participantCount: 0,
-            campFee: parseFloat(data.campFee),
+            campFees: parseFloat(data.campFees),
             healthCareProfessional: user.displayName,
             organizerEmail: user.email
         }
@@ -83,9 +83,9 @@ const AddACamp = () => {
             {/* register your input into the hook by invoking the "register" function */}
             <div>
                 <p>Camp Fee</p>
-                <input type='number' className='text-center w-96 py-2' placeholder='Your Camp fee'  {...register("campFee", { required: true })} />
+                <input type='number' className='text-center w-96 py-2' placeholder='Your Camp fee'  {...register("campFees", { required: true })} />
             </div>
-            {errors.campFee && <p className='text-red-600'>Camp Fee field is required</p>}
+            {errors.campFees && <p className='text-red-600'>Camp Fee field is required</p>}
 
 
             {/* register your input into the hook by invoking the "register" function */}

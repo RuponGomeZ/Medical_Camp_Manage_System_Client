@@ -27,23 +27,23 @@ const Modal = ({ isOpen, setIsOpen, camp }) => {
     } = useForm();
 
     const {
-        campName, dateTime, location,
-        healthcareProfessional, participantCount,
-        image, campFees, _id,
+        campName,
+        healthCareProfessional,
+        image, campFees, _id, organizerEmail, location
     } = camp;
-
 
     const onSubmit = async (data) => {
         setLoading(true)
         const participantData = await axiosPublic.get(`/user/${user.email}`)
 
-        console.log(participantData.data._id);
+        // console.log(participantData.data._id);
         const registerInfo = {
             campName: campName,
             campId: _id,
             campFees: campFees,
             location: data.location,
-            healthcareProfessional: data.healthcareProfessional,
+            healthCareProfessional: data.healthCareProfessional,
+            organizerEmail: organizerEmail,
             participantId: participantData.data._id,
             participantName: user.displayName,
             participantEmail: user.email,
@@ -55,17 +55,20 @@ const Modal = ({ isOpen, setIsOpen, camp }) => {
             paymentStatus: "unpaid",
 
         }
-        const res = await axiosPublic.post(`/registrations/${user.email}`, registerInfo)
+        const res = await axiosPublic.post(`/registrations/${user.email}`, registerInfo, {
+            withCredentials: true
+        })
         if (res.data.insertedId) {
-            await axiosPublic.patch(`/registrations-participantCount/${_id}`)
-
-
+            await axiosPublic.patch(`/registrations-participantCount/${_id}`, {
+                withCredentials: true
+            })
             setIsOpen(false);
             toast.success(`Successfully Applied to Join ${campName}`)
             navigate('/allCamps')
         }
         else {
             toast.error(res.data.message)
+            setLoading(false)
         }
         console.log(res.data.message);
         setLoading(false)
@@ -89,7 +92,7 @@ const Modal = ({ isOpen, setIsOpen, camp }) => {
                         {/* Camp Fee */}
                         <div>
                             <p>Camp Fee</p>
-                            <input type='number' value={campFees} className='text-center w-96 py-2 pointer-events-none'  {...register("campFee", { required: true })} />
+                            <input type='number' value={campFees} className='text-center w-96 py-2 pointer-events-none'  {...register("campFees")} />
                         </div>
 
 
@@ -97,14 +100,14 @@ const Modal = ({ isOpen, setIsOpen, camp }) => {
                         {/* Location */}
                         <div>
                             <p>Camp location</p>
-                            <input className='text-center w-96 py-2  pointer-events-none' value={location}  {...register("location", { required: true })} />
+                            <input className='text-center w-96 py-2  pointer-events-none' value={location}  {...register("location")} />
                         </div>
 
 
                         {/* Health Care Professional */}
                         <div>
                             <p>Health Care Professional Name</p>
-                            <input className='text-center w-96 py-2  pointer-events-none' value={healthcareProfessional} placeholder='Health Care Professional'  {...register("healthCareProfessional", { required: true })} />
+                            <input className='text-center w-96 py-2  pointer-events-none' value={healthCareProfessional} placeholder='Health Care Professional'  {...register("healthCareProfessional")} />
                         </div>
 
                         {/* Participant Name */}
@@ -151,7 +154,7 @@ const Modal = ({ isOpen, setIsOpen, camp }) => {
                             <p>Emergency Contact </p>
                             <input className='text-center w-96 py-2'
                                 type='number'
-                                placeholder='Emergency Contact '  {...register("emergencyContact ", { required: true })} />
+                                placeholder='Emergency Contact '  {...register("emergencyContact", { required: true })} />
                         </div>
 
 
