@@ -12,11 +12,9 @@ import Swal from 'sweetalert2';
 const ManageRegisteredCamps = () => {
 
     const axiosSecure = useAxiosSecure()
-    const { user } = useContext(AuthContext)
     const { data: dataOfRegisteredCamps = [], refetch } = useQuery({
         queryKey: ['registeredCamps'],
         queryFn: async () => {
-            // TODO send email to find registration based on organizer email
             const response = await axiosSecure.get(`/manage-registered-camps`, { withCredentials: true })
             return response.data
         }
@@ -32,7 +30,6 @@ const ManageRegisteredCamps = () => {
     }
 
     const handleCancel = (id, campName) => {
-        // TODO sweet alert for delete
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -92,8 +89,7 @@ const ManageRegisteredCamps = () => {
                                             :
                                             <button disabled={dataOfRegisterCamp?.paymentStatus === "paid"}><ImCross /></button>}
                                     </td>
-                                </tr>)
-                        }
+                                </tr>)}
                     </tbody>
                 </table>
             </div>

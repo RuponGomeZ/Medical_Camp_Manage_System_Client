@@ -61,9 +61,9 @@ const AddACamp = () => {
             toast.success("Camp added successfully!")
             navigate('/allCamps')
         }
-        // console.log(res);
         setLoading(false)
     };
+
 
     return (
         <form className='flex flex-col w-1/2  mx-auto mt-20 gap-5 ' onSubmit={handleSubmit(onSubmit)}>

@@ -1,4 +1,4 @@
-import Lottie, { LottiePlayer } from 'lottie-react';
+import Lottie from 'lottie-react';
 import error404 from '../assets/404.json'
 import { Link } from 'react-router-dom';
 import { FaLeftLong } from 'react-icons/fa6';

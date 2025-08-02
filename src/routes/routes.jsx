@@ -15,6 +15,7 @@ import Dashboard from "../layouts/Dashboard";
 import Profile from "../Pages/Profile";
 import ManageRegisteredCamps from "../Pages/ManageRegisteredCamps";
 import ErrorPage from "../Pages/ErrorPage";
+import RegisteredCamps from "../Pages/RegisteredCamps";
 
 export const router = createBrowserRouter([
     {
@@ -64,6 +65,10 @@ export const router = createBrowserRouter([
             {
                 path: 'manage-registered-camps',
                 element: <ManageRegisteredCamps></ManageRegisteredCamps>
+            },
+            {
+                path: "registered-camps",
+                element: <RegisteredCamps></RegisteredCamps>
             }
         ]
     }
