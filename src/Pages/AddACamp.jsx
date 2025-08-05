@@ -66,36 +66,39 @@ const AddACamp = () => {
 
 
     return (
-        <form className='flex flex-col w-1/2  mx-auto mt-20 gap-5 ' onSubmit={handleSubmit(onSubmit)}>
-            {/* register your input into the hook by invoking the "register" function */}
+        <form className='flex flex-col w-1/2  mx-auto mt-20 gap-5 border rounded-lg  p-3' onSubmit={handleSubmit(onSubmit)}>
+
+            <h2 className='font-bold text-2xl my-6 underline '>Add A Camp</h2>
+
+            {/* Camp name */}
             <div>
                 <p> Camp Name</p>
                 <input className='text-center w-96 py-2' placeholder='Enter Camp Name'  {...register("campName", { required: true })} />
             </div>
 
-            {/* register your input into the hook by invoking the "register" function */}
+            {/* Image upload */}
             <p>Upload Image</p>
             <div className=' w-full '>
                 <input {...register('image', { required: true })} type="file" className="file-input file-input-ghost" />
             </div>
 
 
-            {/* register your input into the hook by invoking the "register" function */}
+            {/* Camp Fee */}
             <div>
-                <p>Camp Fee</p>
+                <p>Camp Fees</p>
                 <input type='number' className='text-center w-96 py-2' placeholder='Your Camp fee'  {...register("campFees", { required: true })} />
             </div>
             {errors.campFees && <p className='text-red-600'>Camp Fee field is required</p>}
 
 
-            {/* register your input into the hook by invoking the "register" function */}
+            {/* Date And time */}
             <div>
                 <p> Date & Time</p>
                 <DatePicker className='text-center border p-2 rounded-md' selected={startDate} onChange={(date) => setStartDate(date)} required />
             </div>
 
 
-            {/* register your input into the hook by invoking the "register" function */}
+            {/* Location */}
             <div>
                 <p>Camp location</p>
                 <input className='text-center w-96 py-2' placeholder='Location'  {...register("location", { required: true })} />
@@ -106,7 +109,7 @@ const AddACamp = () => {
             {/* Health Care Professional */}
             <div>
                 <p>Health Care Professional Name</p>
-                <input className='text-center w-96 py-2' value={user.displayName} placeholder='Health Care Professional'  {...register("healthCareProfessional", { required: true })} />
+                <input className='text-center w-96 py-2' placeholder='Health Care Professional'  {...register("healthCareProfessional", { required: true })} />
             </div>
             {errors.healthCareProfessional && <p className='text-red-600'>healthCareProfessional field is required</p>}
 

@@ -36,7 +36,7 @@ const CampDetails = () => {
     if (isLoading) return <LoadingSpinner />;
 
     const {
-        campName, dateTime, location,
+        campName, date: dateTime, location,
         healthCareProfessional, participantCount,
         image, campFees, description, _id, organizerEmail
     } = camp;
@@ -54,6 +54,13 @@ const CampDetails = () => {
                 <div className='justify-start items-start text-left'>
                     <h1 className="text-5xl font-bold ">{campName}</h1>
                     <p className="flex gap-3"><span className='font-bold'>Camp Fee:</span> <span className='flex items-center'><FaDollarSign />{campFees}</span></p>
+                    <p><span className='font-bold'>Date & Time:</span> {
+                        (() => {
+                            const d = new Date(dateTime);
+                            const date = d.toLocaleDateString('en-GB').replace(/\//g, '-')
+                            return `${date} `;
+                        })()
+                    }</p>
                     <p>{description}</p>
                     <p className="flex gap-3 items-center"><span className='flex font-bold'>Location: </span><FaMapMarkerAlt />{location}</p>
                     <p className="flex gap-2"><span className='font-bold'>Health Care Professional:</span> <FaUserDoctor />{healthCareProfessional}</p>

@@ -83,11 +83,10 @@ const Modal = ({ isOpen, setIsOpen, camp }) => {
             <div className="fixed inset-0 flex items-center justify-center p-4">
                 <Dialog.Panel className="w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded bg-gray-600 p-3 ml-6 shadow-lg">
 
-
                     <form className='flex flex-col   mx-auto  gap-5 text-center px-4'
                         onSubmit={handleSubmit(onSubmit)}
                     >
-                        <h3 className='font-bold text-3xl'>{campName}</h3>
+                        <h3 className='font-bold text-3xl'>Apply to Join <span className='text-green-500'>{campName}</span> Camp</h3>
 
                         {/* Camp Fee */}
                         <div>

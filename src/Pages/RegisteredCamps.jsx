@@ -2,8 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
+import FeedBackModal from '../Utilities/FeedBackModal';
+import { useState } from 'react';
 
 const RegisteredCamps = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const axiosPublic = useAxiosPublic()
 
@@ -14,7 +17,6 @@ const RegisteredCamps = () => {
             return response.data;
         }
     })
-    console.log(registrations);
 
     const handleCancel = (id) => {
         Swal.fire({
@@ -42,8 +44,8 @@ const RegisteredCamps = () => {
     }
 
     return (
-        <div>
-            <h2 className='font-bold text-3xl'>Camps You Have Registered!</h2>
+        <div className='ml-20'>
+            <h2 className='font-bold text-3xl my-10 '>Camps You Have Registered!</h2>
             <div className="overflow-x-auto">
                 <table className="table table-zebra">
                     {/* head */}
@@ -70,7 +72,16 @@ const RegisteredCamps = () => {
                                     <td>{registration?.paymentStatus === "unpaid" ? <button>Pay Now</button> : <p className='text-green-500'>{registration?.paymentStatus}</p>}</td>
                                     <td>{registration.confirmationStatus}</td>
                                     <td><button className={registration?.confirmationStatus === "confirmed" ? "bg-gray-500 px-2 rounded hover:cursor-not-allowed" : `bg-red-600 px-2 rounded `} disabled={registration?.confirmationStatus === "confirmed"} onClick={() => handleCancel(registration._id)}>Cancel</button></td>
-                                    <td><button>FeedBack</button></td>
+                                    <td>
+                                        <button onClick={() => setIsModalOpen(true)} className={registration?.confirmationStatus === "confirmed" ? " px-2 rounded" : " px-2 rounded hover:cursor-not-allowed"}>
+                                            {registration.confirmationStatus === "confirmed" ? "FeedBack" : "N/A"}
+                                        </button>
+                                        <FeedBackModal
+                                            isOpen={isModalOpen}
+                                            setIsOpen={setIsModalOpen}
+                                            registration={registration}
+                                        />
+                                    </td>
                                 </tr>
                             )
                         }

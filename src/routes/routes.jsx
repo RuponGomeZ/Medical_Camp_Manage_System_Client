@@ -16,6 +16,7 @@ import Profile from "../Pages/Profile";
 import ManageRegisteredCamps from "../Pages/ManageRegisteredCamps";
 import ErrorPage from "../Pages/ErrorPage";
 import RegisteredCamps from "../Pages/RegisteredCamps";
+import Analytics from "../Pages/Analytics";
 
 export const router = createBrowserRouter([
     {
@@ -69,6 +70,10 @@ export const router = createBrowserRouter([
             {
                 path: "registered-camps",
                 element: <RegisteredCamps></RegisteredCamps>
+            },
+            {
+                path: "analytics",
+                element: <Analytics></Analytics>
             }
         ]
     }

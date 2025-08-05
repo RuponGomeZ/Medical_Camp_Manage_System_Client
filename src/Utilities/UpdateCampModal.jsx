@@ -101,7 +101,7 @@ const UpdateCampModal = ({ isOpen, setIsOpen, manageCamp, refetch }) => {
                     <form className='flex flex-col   mx-auto  gap-5 text-center px-4'
                         onSubmit={handleSubmit(onSubmit)}
                     >
-                        <h3 className='font-bold text-3xl'>Update your Camp details for {campName}</h3>
+                        <h3 className='font-bold text-3xl'>Update your Camp details for <span className='text-green-400'>{campName}</span></h3>
 
                         {/* Camp name */}
                         <div>

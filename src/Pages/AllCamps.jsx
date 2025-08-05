@@ -27,8 +27,12 @@ const AllCamps = () => {
             <div className='flex justify-between mt-3'>
                 <div className='flex  items-center'>
                     <p>Sort-By:</p>
-                    <select onChange={(e) => setSort(e.target.value)} className="select ml-5">
-                        <option disabled={true}>Default</option>
+                    <select
+                        value={sort}
+                        onChange={(e) => setSort(e.target.value)}
+                        className="select ml-5"
+                    >
+                        <option value="">Default</option>
                         <option value="most-registered">Most Registered</option>
                         <option value="camp-fees">Camp Fees</option>
                         <option value="camp-name">Sort by Camp Name</option>

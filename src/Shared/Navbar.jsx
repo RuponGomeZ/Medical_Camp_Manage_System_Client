@@ -4,7 +4,6 @@ import { AuthContext } from '../Providers/AuthProvider';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import avatarImg from '../../src/assets/images/placeholder.jpg'
-import Dashboard from '../layouts/Dashboard';
 
 const Navbar = () => {
     const { signOutUser, user } = useContext(AuthContext)
@@ -19,9 +18,8 @@ const Navbar = () => {
 
     const links = (
         <div className='flex gap-5'>
-            <Link to="/" key="home">Home</Link>
-            <Link to="/allCamps" key="availableCamps">Available Camps</Link>
-            <Link to="/manage-camp" key="manage-camp">Manage Camps</Link>
+            <NavLink to="/" key="home">Home</NavLink>
+            <NavLink to="/allCamps" key="availableCamps">Available Camps</NavLink>
         </div>
     );
 
@@ -38,7 +36,7 @@ const Navbar = () => {
                         {links}
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl">daisyUI</a>
+                <Link to={"/"} className="btn btn-ghost text-xl">Medico+</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">

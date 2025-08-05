@@ -40,7 +40,7 @@ const Dashboard = () => {
                         </ul>
                         :
                         <ul className='menu p-4'>
-                            <li><NavLink to={"/dashboard/analytic"}><MdAnalytics className='text-lg' />Analytic</NavLink></li>
+                            <li><NavLink to={"/dashboard/analytics"}><MdAnalytics className='text-lg' />Analytic</NavLink></li>
                             <li><NavLink to={"/dashboard/profile"}><FaUserCircle />Profile</NavLink></li>
                             <li><NavLink to={"/dashboard/registered-camps"}><LiaCashRegisterSolid />Registered Camps</NavLink></li>
                             <li><NavLink to={"/dashboard/payment-history"}><FaHistory />Payment History</NavLink></li>

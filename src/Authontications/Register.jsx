@@ -3,14 +3,33 @@ import { useForm } from 'react-hook-form';
 import { AuthContext } from '../Providers/AuthProvider';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { FaGooglePlus } from 'react-icons/fa';
 
 
 const Register = () => {
 
-    const { emailSignUp, updateUserProfile, setLoading } = useContext(AuthContext)
+
+
+
+    const { emailSignUp, updateUserProfile, setLoading, googleLogin } = useContext(AuthContext)
     const navigate = useNavigate()
     const image_hosting_key = import.meta.env.VITE_IMG_API_KEY
     const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
+
+    const handleGoogleLogin = () => {
+        googleLogin()
+            .then(res => {
+                console.log(res);
+                toast.success("Login Successful")
+                setLoading(false)
+                navigate('/')
+
+            })
+            .catch(error => {
+                toast.error(error)
+                setLoading(false)
+            })
+    }
 
     const {
         register,
@@ -92,6 +111,8 @@ const Register = () => {
                             <input className="btn btn-neutral mt-4" type="submit" value="Register" />
                         </fieldset>
                     </form >
+                    <button onClick={handleGoogleLogin} type='button' className='bg-red-500 btn'><FaGooglePlus className='text-xl' />
+                        Google Login</button>
                     <p className='text-center pb-5 '>Already have an Account? <Link className='font-bold underline text-red-400' to={"/login"}>Login </Link></p>
 
                 </div>

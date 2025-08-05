@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const PopularCampCard = ({ popularCamp }) => {
-    const { image, campName, campFees, dateTime, location, healthCareProfessional, participantCount, _id } = popularCamp
+    const { image, campName, campFees, date: dateTime, location, healthCareProfessional, participantCount, _id } = popularCamp
 
     return (
         <div>
@@ -19,13 +19,8 @@ const PopularCampCard = ({ popularCamp }) => {
                         <p><span className='font-bold'>Date & Time:</span> {
                             (() => {
                                 const d = new Date(dateTime);
-                                const date = d.toLocaleDateString('en-GB').replace(/\//g, '-');
-                                const time = d.toLocaleTimeString('en-US', {
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                    hour12: true
-                                });
-                                return `${date} ${time}`;
+                                const date = d.toLocaleDateString('en-GB').replace(/\//g, '-')
+                                return `${date} `;
                             })()
                         }</p>
                         <p><span className='font-bold'>Healthcare Professional</span> : {healthCareProfessional}</p>

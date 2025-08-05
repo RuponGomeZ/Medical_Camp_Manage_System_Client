@@ -11,6 +11,7 @@ import PopularCampCard from './popularCampCard';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosPublic from '../hooks/useAxiosPublic';
+import FeedBacks from '../Utilities/FeedBacks';
 
 const Home = () => {
 
@@ -53,10 +54,17 @@ const Home = () => {
                 <h2 className='my-7 font-bold text-4xl'>Popular Camps</h2>
                 <div className=' grid grid-cols-3'>
                     {
-                        popularCamps.slice(0, 6).map(popularCamp => <PopularCampCard popularCamp={popularCamp} key={popularCamp._id}></PopularCampCard>)
+                        popularCamps.sort((a, b) => b.participantCount - a.participantCount).slice(0, 6).map(popularCamp => <PopularCampCard popularCamp={popularCamp} key={popularCamp._id}></PopularCampCard>)
                     }
                 </div>
                 <Link to="/allCamps" className='btn btn-primary'>See All Camps</Link>
+            </div>
+
+            {/* FeedBack section  */}
+
+            <div className='my-36'>
+                <h2 className='font-bold text-4xl'>Feedbacks & Ratings</h2>
+                <FeedBacks></FeedBacks>
             </div>
         </div>
     );
