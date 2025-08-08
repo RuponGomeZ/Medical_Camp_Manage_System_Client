@@ -4,10 +4,16 @@ import useAxiosPublic from '../hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
 import FeedBackModal from '../Utilities/FeedBackModal';
 import { useState } from 'react';
+import MakePaymentModal from '../Components/MakePaymentModal';
 
 const RegisteredCamps = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedRegistration, setSelectedRegistration] = useState(null)
+    let [isOpen, setIsOpen] = useState(false)
 
+    const closeModal = () => {
+        setIsOpen(false)
+    }
     const axiosPublic = useAxiosPublic()
 
     const { data: registrations = [], refetch } = useQuery({
@@ -17,6 +23,7 @@ const RegisteredCamps = () => {
             return response.data;
         }
     })
+    // console.log(selectedRegistration);
 
     const handleCancel = (id) => {
         Swal.fire({
@@ -69,7 +76,13 @@ const RegisteredCamps = () => {
                                     <td>{registration.campName}</td>
                                     <td>{registration.campFees}</td>
                                     <td>{registration.participantName}</td>
-                                    <td>{registration?.paymentStatus === "unpaid" ? <button>Pay Now</button> : <p className='text-green-500'>{registration?.paymentStatus}</p>}</td>
+                                    <td>{registration?.paymentStatus === "unpaid" ? <button onClick={() => {
+                                        setSelectedRegistration(registration);
+                                        setIsOpen(true)
+                                    }
+                                    }>Pay Now</button> : <p className='text-green-500'>{registration?.paymentStatus}</p>}
+
+                                    </td>
                                     <td>{registration.confirmationStatus}</td>
                                     <td><button className={registration?.confirmationStatus === "confirmed" ? "bg-gray-500 px-2 rounded hover:cursor-not-allowed" : `bg-red-600 px-2 rounded `} disabled={registration?.confirmationStatus === "confirmed"} onClick={() => handleCancel(registration._id)}>Cancel</button></td>
                                     <td>
@@ -88,6 +101,14 @@ const RegisteredCamps = () => {
                     </tbody>
                 </table>
             </div>
+            {selectedRegistration && (
+                <MakePaymentModal
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                    registration={selectedRegistration}
+                    refetch={refetch}
+                />
+            )}
         </div>
     );
 };
