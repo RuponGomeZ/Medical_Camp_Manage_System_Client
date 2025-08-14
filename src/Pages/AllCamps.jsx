@@ -20,11 +20,10 @@ const AllCamps = () => {
 
     })
 
-    console.log(sort);
 
     return (
         <div>
-            <div className='flex justify-between mt-3'>
+            <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-3'>
                 <div className='flex  items-center'>
                     <p>Sort-By:</p>
                     <select
@@ -55,15 +54,21 @@ const AllCamps = () => {
                 </label>
             </div>
             <div className='mt-10'>
-                <div className='flex'>
-                    <button onClick={() => setTwoColum(prev => !prev)} className="btn btn-outline mr-4">
+                <div className='flex justify-between'>
+                    <button
+                        onClick={() => setTwoColum(prev => !prev)}
+                        className="btn btn-outline mr-4 lg:block hidden"
+                    >
                         {twoColumn ? '3-Column Layout' : '2-Column Layout'}
                     </button>
-                    <h2 className='my-7 font-bold text-4xl flex-1'>Popular Camps</h2>
-                    <Link to={'/addCamp'} className='btn btn-primary'>Add a camp</Link>
                 </div>
+                <h2 className='my-7 font-bold text-4xl flex-1'>Popular Camps</h2>
                 <div className='flex justify-center'>
-                    <div className={`grid ${twoColumn ? 'md:grid-cols-2' : 'grid-cols-3'} gap-5 `}>
+                    <div className={`grid gap-5 
+    grid-cols-1 
+    sm:grid-cols-2 
+    ${twoColumn ? 'lg:grid-cols-2' : 'lg:grid-cols-3'}
+  `}>
                         {
                             popularCamps.map(popularCamp => <PopularCampCard popularCamp={popularCamp} key={popularCamp._id}></PopularCampCard>)
                         }

@@ -33,7 +33,10 @@ const MakePaymentModal = ({ setIsOpen, isOpen, registration, refetch }) => {
         },
         campId: registration.campId,
         price: registration.campFees,
-        registrationId: registration._id
+        registrationId: registration._id,
+        campName: registration.campName,
+        registerId: registration._id,
+        confirmationStatus: "pending"
     }
 
 
@@ -51,10 +54,6 @@ const MakePaymentModal = ({ setIsOpen, isOpen, registration, refetch }) => {
                         <p className='font-bold'>User: {user.displayName}</p>
                         <p className='font-bold'>email: {user.email}</p>
                         <p className='font-bold'>Camp Fee: ${registration?.campFees}</p>
-
-
-
-
 
                     </div>
 

@@ -17,6 +17,7 @@ import ManageRegisteredCamps from "../Pages/ManageRegisteredCamps";
 import ErrorPage from "../Pages/ErrorPage";
 import RegisteredCamps from "../Pages/RegisteredCamps";
 import Analytics from "../Pages/Analytics";
+import PaymentHistory from "../Components/PaymentHistory";
 
 export const router = createBrowserRouter([
     {
@@ -74,6 +75,10 @@ export const router = createBrowserRouter([
             {
                 path: "analytics",
                 element: <Analytics></Analytics>
+            },
+            {
+                path: "payment-history",
+                element: <PaymentHistory></PaymentHistory>
             }
         ]
     }

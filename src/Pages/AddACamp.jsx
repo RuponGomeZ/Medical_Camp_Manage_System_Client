@@ -1,10 +1,8 @@
 import React, { useContext } from 'react';
-import ReactDOM from "react-dom";
 import { useForm } from "react-hook-form";
 import useAxiosPublic from '../hooks/useAxiosPublic';
 import { useState } from "react";
 import DatePicker from "react-datepicker";
-
 import "react-datepicker/dist/react-datepicker.css";
 import { AuthContext } from '../Providers/AuthProvider';
 import { toast } from 'react-toastify';
@@ -19,7 +17,6 @@ const AddACamp = () => {
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors }
     } = useForm();
 
@@ -32,9 +29,7 @@ const AddACamp = () => {
             body: imageFile
         });
         const data = await response.json();
-        // console.log(data);
         return data.data.display_url;
-
     };
 
     const onSubmit = async (data) => {
@@ -64,64 +59,93 @@ const AddACamp = () => {
         setLoading(false)
     };
 
-
     return (
-        <form className='flex flex-col w-1/2  mx-auto mt-20 gap-5 border rounded-lg  p-3' onSubmit={handleSubmit(onSubmit)}>
-
-            <h2 className='font-bold text-2xl my-6 underline '>Add A Camp</h2>
+        <form
+            className='flex flex-col w-10/12 max-w-2xl mx-auto mt-10 md:mt-20 gap-5 border rounded-lg p-4 md:p-6'
+            onSubmit={handleSubmit(onSubmit)}
+        >
+            <h2 className='font-bold text-2xl my-6 underline'>Add A Camp</h2>
 
             {/* Camp name */}
             <div>
-                <p> Camp Name</p>
-                <input className='text-center w-96 py-2' placeholder='Enter Camp Name'  {...register("campName", { required: true })} />
+                <p>Camp Name</p>
+                <input
+                    className='text-center w-full max-w-md py-2 mx-auto'
+                    placeholder='Enter Camp Name'
+                    {...register("campName", { required: true })}
+                />
             </div>
 
             {/* Image upload */}
-            <p>Upload Image</p>
-            <div className=' w-full '>
-                <input {...register('image', { required: true })} type="file" className="file-input file-input-ghost" />
+            <div>
+                <p>Upload Image</p>
+                <input
+                    {...register('image', { required: true })}
+                    type="file"
+                    className="file-input file-input-ghost w-full max-w-md mx-auto"
+                />
             </div>
-
 
             {/* Camp Fee */}
             <div>
                 <p>Camp Fees</p>
-                <input type='number' className='text-center w-96 py-2' placeholder='Your Camp fee'  {...register("campFees", { required: true })} />
+                <input
+                    type='number'
+                    className='text-center w-full max-w-md py-2 mx-auto'
+                    placeholder='Your Camp fee'
+                    {...register("campFees", { required: true })}
+                />
+                {errors.campFees && <p className='text-red-600'>Camp Fee field is required</p>}
             </div>
-            {errors.campFees && <p className='text-red-600'>Camp Fee field is required</p>}
-
 
             {/* Date And time */}
             <div>
-                <p> Date & Time</p>
-                <DatePicker className='text-center border p-2 rounded-md' selected={startDate} onChange={(date) => setStartDate(date)} required />
+                <p>Date & Time</p>
+                <DatePicker
+                    className='text-center border p-2 rounded-md w-full max-w-md mx-auto'
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                    required
+                />
             </div>
-
 
             {/* Location */}
             <div>
                 <p>Camp location</p>
-                <input className='text-center w-96 py-2' placeholder='Location'  {...register("location", { required: true })} />
+                <input
+                    className='text-center w-full max-w-md py-2 mx-auto'
+                    placeholder='Location'
+                    {...register("location", { required: true })}
+                />
+                {errors.location && <p className='text-red-600'>Location field is required</p>}
             </div>
-            {errors.location && <p className='text-red-600'>Location field is required</p>}
-
 
             {/* Health Care Professional */}
             <div>
                 <p>Health Care Professional Name</p>
-                <input className='text-center w-96 py-2' placeholder='Health Care Professional'  {...register("healthCareProfessional", { required: true })} />
+                <input
+                    className='text-center w-full max-w-md py-2 mx-auto'
+                    placeholder='Health Care Professional'
+                    {...register("healthCareProfessional", { required: true })}
+                />
+                {errors.healthCareProfessional && <p className='text-red-600'>healthCareProfessional field is required</p>}
             </div>
-            {errors.healthCareProfessional && <p className='text-red-600'>healthCareProfessional field is required</p>}
-
 
             {/* Description */}
             <div>
                 <p>Enter Description</p>
-                <input className='text-center w-96 py-2' placeholder='Description'  {...register("description", { required: true })} />
+                <input
+                    className='text-center w-full max-w-md py-2 mx-auto'
+                    placeholder='Description'
+                    {...register("description", { required: true })}
+                />
+                {errors.description && <p className='text-red-600'>This field is required</p>}
             </div>
-            {errors.description && <p className='text-red-600'>This field is required</p>}
 
-            <input className='btn btn-primary w-fit mx-auto' type="submit" />
+            <input
+                className='btn btn-primary w-fit mx-auto'
+                type="submit"
+            />
         </form>
     );
 };

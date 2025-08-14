@@ -104,6 +104,7 @@ const CheckoutForm = ({ purchaseInfo, refetch, setIsOpen }) => {
                 }
             } catch (err) {
                 toast.error(err.response?.data || err.message);
+                setProcessing(false)
             }
             finally {
                 setProcessing(false)

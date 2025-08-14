@@ -9,13 +9,13 @@ import { FaUserDoctor } from "react-icons/fa6";
 import { format } from "date-fns";
 import { AuthContext } from '../Providers/AuthProvider';
 import Modal from '../Utilities/Modal';
-import placeHolder from '../assets/images/placeholder.jpg'
+import placeHolder from '../assets/images/placeholder.jpg';
 
 const CampDetails = () => {
     const { id } = useParams();
     const axiosPublic = useAxiosPublic();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { user } = useContext(AuthContext)
+    const { user } = useContext(AuthContext);
 
     const { data: isApplied = [] } = useQuery({
         queryKey: ['applied', user?.email, id],
@@ -41,38 +41,82 @@ const CampDetails = () => {
         image, campFees, description, _id, organizerEmail
     } = camp;
 
-    console.log(camp);
-
     return (
-        <div className="hero bg-base-200 min-h-screen">
-            <div className="hero-content flex-col lg:flex-row">
-                <img
-                    referrerPolicy='no-referrer'
-                    src={image || placeHolder}
-                    className="max-w-sm rounded-lg shadow-2xl"
-                />
-                <div className='justify-start items-start text-left'>
-                    <h1 className="text-5xl font-bold ">{campName}</h1>
-                    <p className="flex gap-3"><span className='font-bold'>Camp Fee:</span> <span className='flex items-center'><FaDollarSign />{campFees}</span></p>
-                    <p><span className='font-bold'>Date & Time:</span> {
-                        (() => {
-                            const d = new Date(dateTime);
-                            const date = d.toLocaleDateString('en-GB').replace(/\//g, '-')
-                            return `${date} `;
-                        })()
-                    }</p>
-                    <p>{description}</p>
-                    <p className="flex gap-3 items-center"><span className='flex font-bold'>Location: </span><FaMapMarkerAlt />{location}</p>
-                    <p className="flex gap-2"><span className='font-bold'>Health Care Professional:</span> <FaUserDoctor />{healthCareProfessional}</p>
-                    <p className="flex gap-2 items-center"> <span className='font-bold'>Participants: </span> <GrGroup />{participantCount}</p>
+        <div className="bg-base-200 min-h-screen py-8 px-4 sm:px-6">
+            <div className="max-w-6xl mx-auto">
+                <div className="flex flex-col lg:flex-row gap-8">
+                    {/* Image Section */}
+                    <div className="w-full lg:w-1/2 flex justify-center">
+                        <img
+                            referrerPolicy='no-referrer'
+                            src={image || placeHolder}
+                            className="w-full max-w-md rounded-lg shadow-2xl object-cover"
+                            alt={campName}
+                        />
+                    </div>
 
-                    <button className={`btn btn-primary mt-5 `} onClick={() => setIsModalOpen(true)} disabled={isApplied.length > 0 || organizerEmail === user.email}>Join Camp</button>
+                    {/* Details Section */}
+                    <div className="w-full lg:w-1/2 space-y-4">
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold ">{campName}</h1>
 
-                    <Modal
-                        isOpen={isModalOpen}
-                        setIsOpen={setIsModalOpen}
-                        camp={camp}
-                    />
+                        <div className="space-y-3">
+                            <p className="flex flex-wrap items-center gap-2">
+                                <span className='font-bold'>Camp Fee:</span>
+                                <span className='flex items-center gap-1'>
+                                    <FaDollarSign className="text-sm" />
+                                    {campFees}
+                                </span>
+                            </p>
+
+                            <p className=' flex gap-2'><span className='font-bold'>Date & Time: </span> {
+                                (() => {
+                                    const d = new Date(dateTime);
+                                    const date = d.toLocaleDateString('en-GB').replace(/\//g, '-')
+                                    return `${date} `;
+                                })()
+                            }</p>
+
+                            <p className="text-justify">{description}</p>
+
+                            <p className="flex flex-wrap items-center gap-2">
+                                <span className='font-bold'>Location:</span>
+                                <span className='flex items-center gap-1'>
+                                    <FaMapMarkerAlt />
+                                    {location}
+                                </span>
+                            </p>
+
+                            <p className="flex flex-wrap items-center gap-2">
+                                <span className='font-bold'>Health Care Professional:</span>
+                                <span className='flex items-center gap-1'>
+                                    <FaUserDoctor />
+                                    {healthCareProfessional}
+                                </span>
+                            </p>
+
+                            <p className="flex flex-wrap items-center gap-2">
+                                <span className='font-bold'>Participants:</span>
+                                <span className='flex items-center gap-1'>
+                                    <GrGroup />
+                                    {participantCount}
+                                </span>
+                            </p>
+                        </div>
+
+                        <button
+                            className="btn btn-primary w-full sm:w-auto mt-6"
+                            onClick={() => setIsModalOpen(true)}
+                            disabled={isApplied.length > 0 || organizerEmail === user?.email}
+                        >
+                            Join Camp
+                        </button>
+
+                        <Modal
+                            isOpen={isModalOpen}
+                            setIsOpen={setIsModalOpen}
+                            camp={camp}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

@@ -52,7 +52,7 @@ const Home = () => {
 
             <div className='mt-16'>
                 <h2 className='my-7 font-bold text-4xl'>Popular Camps</h2>
-                <div className=' grid grid-cols-3'>
+                <div className=' grid md:grid-cols-2 lg:grid-cols-3'>
                     {
                         popularCamps.sort((a, b) => b.participantCount - a.participantCount).slice(0, 6).map(popularCamp => <PopularCampCard popularCamp={popularCamp} key={popularCamp._id}></PopularCampCard>)
                     }

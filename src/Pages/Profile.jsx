@@ -25,7 +25,7 @@ const Profile = () => {
     if (isLoading) return <LoadingSpinner />
 
     return (
-        <div className=' mx-auto'>
+        <div className='flex flex-col items-center justify-center min-h-screen'>
             <img className='rounded-full w-36 h-36 items-center mx-auto' src={userId.photoURL ? userId.photoURL : user.photoURL} alt="" />
             <h3 className='font-bold text-2xl'>{userId.displayName ? userId.displayName : user.displayName}</h3>
             <p>Email: <span className='font-bold'>{userId.email ? userId.email : user.email}</span></p>
