@@ -1,4 +1,4 @@
-# 🚀 Medico+ Frontend — Medical Campaign Web Application
+# 🏥 Medico+ Frontend — Medical Campaign Web Application
 
 This is the frontend for **Medico+**, a Campaign sharing web application that allows users to create, manage, book, and update Campaign. Built with Express.js and MongoDB, this RESTful API supports JWT-based authentication and secure CRUD operations.
 
