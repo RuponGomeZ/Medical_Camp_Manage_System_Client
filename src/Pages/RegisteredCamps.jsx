@@ -1,29 +1,44 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
 import FeedBackModal from '../Utilities/FeedBackModal';
-import { useState } from 'react';
 import MakePaymentModal from '../Components/MakePaymentModal';
 import { FaArrowRight } from 'react-icons/fa';
+import ReactPaginate from 'react-paginate';
 
 const RegisteredCamps = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedRegistration, setSelectedRegistration] = useState(null)
-    let [isOpen, setIsOpen] = useState(false)
+    const [selectedRegistration, setSelectedRegistration] = useState(null);
+    const [isOpen, setIsOpen] = useState(false);
+
+    // Pagination state
+    const [itemOffset, setItemOffset] = useState(0);
+    const itemsPerPage = 5;
 
     const closeModal = () => {
-        setIsOpen(false)
-    }
-    const axiosPublic = useAxiosPublic()
+        setIsOpen(false);
+    };
+
+    const axiosPublic = useAxiosPublic();
 
     const { data: registrations = [], refetch } = useQuery({
         queryKey: ['registrations'],
         queryFn: async () => {
-            const response = await axiosPublic('/registered-camps', { withCredentials: true })
+            const response = await axiosPublic('/registered-camps', { withCredentials: true });
             return response.data;
         }
-    })
+    });
+
+    // Pagination logic
+    const endOffset = itemOffset + itemsPerPage;
+    const currentItems = registrations.slice(itemOffset, endOffset);
+    const pageCount = Math.ceil(registrations.length / itemsPerPage);
+
+    const handlePageClick = (event) => {
+        const newOffset = (event.selected * itemsPerPage) % registrations.length;
+        setItemOffset(newOffset);
+    };
 
     const handleCancel = (id) => {
         Swal.fire({
@@ -36,9 +51,9 @@ const RegisteredCamps = () => {
             confirmButtonText: "Yes, Cancel it!"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const res = await axiosPublic.delete(`/cancel/${id}`, { withCredentials: true })
+                const res = await axiosPublic.delete(`/cancel/${id}`, { withCredentials: true });
                 if (res.data.deletedCount) {
-                    refetch()
+                    refetch();
                     Swal.fire({
                         title: "Deleted!",
                         text: "Your registration has been canceled.",
@@ -47,7 +62,7 @@ const RegisteredCamps = () => {
                 }
             }
         });
-    }
+    };
 
     return (
         <div className='mx-2 sm:mx-4 md:ml-20'>
@@ -56,7 +71,6 @@ const RegisteredCamps = () => {
             </h2>
             <div className="overflow-x-auto">
                 <table className="table table-zebra w-full text-sm sm:text-base">
-                    {/* head */}
                     <thead>
                         <tr>
                             <th className='hidden sm:table-cell'>SL</th>
@@ -70,9 +84,9 @@ const RegisteredCamps = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {registrations.map((registration, i) => (
+                        {currentItems.map((registration, i) => (
                             <tr key={registration._id}>
-                                <td className='hidden sm:table-cell'>{i + 1}</td>
+                                <td className='hidden sm:table-cell'>{itemOffset + i + 1}</td>
                                 <td className="whitespace-normal break-words max-w-[120px] sm:max-w-none">
                                     {registration.campName}
                                 </td>
@@ -115,7 +129,7 @@ const RegisteredCamps = () => {
                                             : ""}`}
                                         disabled={registration?.paymentStatus === "unpaid" || registration.confirmationStatus === "pending"}
                                     >
-                                        {registration.confirmationStatus === "Confirmed" ? "Feedback" : "N/A"}
+                                        {registration.confirmationStatus === "confirmed" ? "Feedback" : "N/A"}
                                     </button>
                                     <FeedBackModal
                                         isOpen={isModalOpen}
@@ -128,7 +142,24 @@ const RegisteredCamps = () => {
                     </tbody>
                 </table>
             </div>
-            <p className='flex gap-2 items-center mt-10 lg:hidden text-blue-500'> Scroll right to see all information <FaArrowRight /> </p>
+
+            {/* Pagination */}
+            <div className="mt-4 flex justify-center">
+                <ReactPaginate
+                    breakLabel="..."
+                    nextLabel="next >"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={3}
+                    pageCount={pageCount}
+                    previousLabel="< previous"
+                    containerClassName="flex gap-2"
+                    activeClassName="font-bold underline"
+                />
+            </div>
+
+            <p className='flex gap-2 items-center mt-10 lg:hidden text-blue-500'>
+                Scroll right to see all information <FaArrowRight />
+            </p>
 
             {selectedRegistration && (
                 <MakePaymentModal
@@ -139,7 +170,6 @@ const RegisteredCamps = () => {
                 />
             )}
         </div>
-
     );
 };
 

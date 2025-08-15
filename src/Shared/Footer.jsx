@@ -9,7 +9,7 @@ const Footer = () => {
 
                     <p>
                         <br />
-                        Providing reliable tech since 1992
+                        Providing reliable Service since 1992
                     </p>
                 </aside>
                 <nav>

@@ -75,7 +75,7 @@ const Register = () => {
                 <div className="text-center lg:text-left">
 
                 </div>
-                <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+                <div className="card md:bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
                     <h1 className="text-5xl font-bold">Sign up now!</h1>
                     <form onSubmit={handleSubmit(onSubmit)} className="card-body">
                         <fieldset className="fieldset">

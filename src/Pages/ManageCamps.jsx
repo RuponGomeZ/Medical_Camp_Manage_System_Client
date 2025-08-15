@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
-import { useContext } from 'react';
 import { AuthContext } from '../Providers/AuthProvider';
 import Swal from 'sweetalert2';
 import LoadingSpinner from '../Utilities/LoadingSpinner';
-import { useState } from 'react';
 import UpdateCampModal from '../Utilities/UpdateCampModal';
+import ReactPaginate from 'react-paginate';
 
 const ManageCamps = () => {
     const axiosSecure = useAxiosSecure();
     const { user } = useContext(AuthContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedCamp, setSelectedCamp] = useState(null);
+
+    // Pagination state
+    const [itemOffset, setItemOffset] = useState(0);
+    const itemsPerPage = 10;
 
     const { data: manageCamps = [], refetch, isLoading } = useQuery({
         queryKey: ['manageCamps', user.email],
@@ -23,6 +26,15 @@ const ManageCamps = () => {
     });
 
     if (isLoading) return <LoadingSpinner />;
+
+    const endOffset = itemOffset + itemsPerPage;
+    const currentItems = manageCamps.slice(itemOffset, endOffset);
+    const pageCount = Math.ceil(manageCamps.length / itemsPerPage);
+
+    const handlePageClick = (event) => {
+        const newOffset = (event.selected * itemsPerPage) % manageCamps.length;
+        setItemOffset(newOffset);
+    };
 
     const handleDelete = (id, campName) => {
         Swal.fire({
@@ -54,30 +66,29 @@ const ManageCamps = () => {
 
             <div className="overflow-x-auto mr-0 md:mr-4">
                 <table className="table table-zebra w-full">
-                    {/* head */}
                     <thead>
                         <tr>
                             <th className="text-xs md:text-base">SL</th>
                             <th className="text-xs md:text-base">Camp Name</th>
                             <th className="text-xs hidden lg:block md:text-base">Date & Time</th>
                             <th className="text-xs md:text-base hidden sm:table-cell">Location</th>
-                            <th className="text-xs md:text-base hidden  lg:block">Healthcare Professional</th>
+                            <th className="text-xs md:text-base hidden lg:block">Healthcare Professional</th>
                             <th className="text-xs md:text-base">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {manageCamps.map((manageCamp, i) => (
+                        {currentItems.map((manageCamp, i) => (
                             <tr key={manageCamp._id}>
-                                <td className="text-xs md:text-base">{i + 1}</td>
+                                <td className="text-xs md:text-base">{itemOffset + i + 1}</td>
                                 <th className="text-xs md:text-base">{manageCamp.campName}</th>
-                                <td className="text-xs md:text-base  hidden lg:block">
+                                <td className="text-xs md:text-base hidden lg:block">
                                     {(() => {
                                         const d = new Date(manageCamp.date);
                                         return d.toLocaleDateString('en-GB').replace(/\//g, '-');
                                     })()}
                                 </td>
                                 <td className="text-xs md:text-base hidden sm:table-cell">{manageCamp.location}</td>
-                                <td className="text-xs md:text-base hidden  lg:block">{manageCamp.healthCareProfessional}</td>
+                                <td className="text-xs md:text-base hidden lg:block">{manageCamp.healthCareProfessional}</td>
                                 <td className='space-x-2'>
                                     <button
                                         onClick={() => {
@@ -99,6 +110,20 @@ const ManageCamps = () => {
                         ))}
                     </tbody>
                 </table>
+            </div>
+
+            {/* Pagination */}
+            <div className="mt-4 flex justify-center">
+                <ReactPaginate
+                    breakLabel="..."
+                    nextLabel="next >"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={3}
+                    pageCount={pageCount}
+                    previousLabel="< previous"
+                    containerClassName="flex gap-2"
+                    activeClassName="font-bold underline"
+                />
             </div>
 
             {isModalOpen && selectedCamp && (

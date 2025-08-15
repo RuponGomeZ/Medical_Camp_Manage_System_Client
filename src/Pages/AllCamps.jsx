@@ -17,7 +17,6 @@ const AllCamps = () => {
             const res = await axiosPublic.get(`/camps?search=${search}&sort=${sort}`)
             return res.data
         }
-
     })
 
 

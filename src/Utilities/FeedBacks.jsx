@@ -47,7 +47,7 @@ const FeedBacks = () => {
                     feedbacks.map(feedback =>
                         <SwiperSlide>
                             <div className=' mx-auto  container p-6 my-5'>
-                                <div className='border border-dotted bg-gray-900 p-2 rounded-3xl'>
+                                <div className='border border-dotted w-72 sm:w-80 md:w-96 md:h-52  p-2 rounded-3xl'>
                                     <img className='rounded-full w-16 mx-auto relative bottom-8' src={feedback.participantPhotoURL || placeholder} alt="" />
                                     <p className='mx-2'>{(feedback.comment).slice(0, 120)}. . . . .</p>
                                     <div className='flex justify-center gap-3 mt-3'>
@@ -56,7 +56,7 @@ const FeedBacks = () => {
                                                 [1, 2, 3, 4, 5].map((star) => (
                                                     <div
                                                         key={star}
-                                                        className={`mask mask-star ${star <= parseInt(feedback.rating) ? 'bg-white ' : 'bg-gray-500'}`}
+                                                        className={`mask mask-star ${star <= parseInt(feedback.rating) ? 'bg-red-700' : 'bg-gray-500'}`}
                                                         aria-label={`${star} star`}
                                                     ></div>
                                                 ))
