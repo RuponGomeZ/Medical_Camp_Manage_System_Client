@@ -14,7 +14,7 @@ const provider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
     const axiosPublic = useAxiosPublic()
 
-    const [user, setUser] = useState([])
+    const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(false);
 
 
@@ -63,15 +63,11 @@ const AuthProvider = ({ children }) => {
         updateUserProfile
     }
 
-
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async currentUser => {
             if (currentUser?.email) {
-
-
                 setUser(currentUser)
-                console.log(currentUser);
-                await axios.post('http://localhost:5000/jwt',
+                await axios.post(`${import.meta.env.VITE_API_URL}/jwt`,
                     { email: currentUser?.email },
                     { withCredentials: true }
                 )
@@ -79,11 +75,11 @@ const AuthProvider = ({ children }) => {
                     email: currentUser.email,
                 }
 
-                await axiosPublic.post('/users', userInfo)
+                await axiosPublic.post('/users', userInfo, { withCredentials: true })
 
             } else {
                 setUser(currentUser)
-                await axios.get('http://localhost:5000/logout', {
+                await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
                     withCredentials: true
                 })
             }
