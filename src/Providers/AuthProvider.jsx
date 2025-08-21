@@ -14,7 +14,7 @@ const provider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
     const axiosPublic = useAxiosPublic()
 
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState([])
     const [loading, setLoading] = useState(false);
 
 
@@ -67,7 +67,7 @@ const AuthProvider = ({ children }) => {
         const unsubscribe = onAuthStateChanged(auth, async currentUser => {
             if (currentUser?.email) {
                 setUser(currentUser)
-                await axios.post(`${import.meta.env.VITE_API_URL}/jwt`,
+                await axiosPublic.post('/jwt',
                     { email: currentUser?.email },
                     { withCredentials: true }
                 )

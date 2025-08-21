@@ -31,7 +31,8 @@ const Home = () => {
             return res.data
         }
     })
-    console.log(successfulCamps);
+
+
 
     return (
         <div>
