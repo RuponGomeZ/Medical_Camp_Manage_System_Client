@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import useAxiosPublic from '../hooks/useAxiosPublic';
+import PageTitle from '../Components/PageTitle';
 
 const Analytics = () => {
     const axiosPublic = useAxiosPublic();
@@ -20,6 +21,8 @@ const Analytics = () => {
 
     return (
         <div className="w-full h-[70vh] min-h-[300px] p-2">
+            <PageTitle title="Analytics"></PageTitle>
+
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                     data={pieChartData}

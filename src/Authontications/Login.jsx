@@ -7,6 +7,7 @@ import { AuthContext } from '../Providers/AuthProvider';
 import LoadingSpinner from '../Utilities/LoadingSpinner';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import PageTitle from '../Components/PageTitle';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -47,6 +48,8 @@ const Login = () => {
                 className="flex flex-col gap-5 items-center w-full md:w-5/12 lg:w-4/12"
                 onSubmit={handleSubmit(onSubmit)}
             >
+                <PageTitle title="Login"></PageTitle>
+
                 <p className="font-bold text-2xl md:text-3xl mb-3 text-center">Login to your account</p>
 
                 <input

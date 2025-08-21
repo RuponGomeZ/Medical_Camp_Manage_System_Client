@@ -13,6 +13,7 @@ import { useQuery } from '@tanstack/react-query';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 import FeedBacks from '../Utilities/FeedBacks';
 import Vaccinate from './Vaccinate';
+import PageTitle from '../Components/PageTitle';
 
 const Home = () => {
     const axiosPublic = useAxiosPublic();
@@ -36,6 +37,7 @@ const Home = () => {
 
     return (
         <div>
+            <PageTitle title="Home"></PageTitle>
             <div className='mt-16'>
                 <h2 className='my-7 font-bold text-4xl md:text-center sm:text-left px-4'>Our Successful Camps</h2>
                 <div className="flex justify-center items-center">

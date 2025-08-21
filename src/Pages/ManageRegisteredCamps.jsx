@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { AuthContext } from '../Providers/AuthProvider';
 import Swal from 'sweetalert2';
 import ReactPaginate from 'react-paginate';
+import PageTitle from '../Components/PageTitle';
 
 const ManageRegisteredCamps = () => {
     const axiosSecure = useAxiosSecure();
@@ -73,6 +74,7 @@ const ManageRegisteredCamps = () => {
 
     return (
         <div className="mx-4">
+            <PageTitle title="Manage Registered Camps"></PageTitle>
             <h2 className='font-bold text-2xl md:text-3xl my-5'>
                 Manage Camps that are registered
             </h2>

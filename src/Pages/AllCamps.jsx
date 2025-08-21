@@ -3,6 +3,7 @@ import PopularCampCard from '../Home/popularCampCard';
 import { Link } from 'react-router-dom';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 import { useQuery } from '@tanstack/react-query';
+import PageTitle from '../Components/PageTitle';
 
 const AllCamps = () => {
 
@@ -22,6 +23,8 @@ const AllCamps = () => {
 
     return (
         <div>
+            <PageTitle title="All Camps"></PageTitle>
+
             <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-3'>
                 <div className='flex  items-center'>
                     <p>Sort-By:</p>

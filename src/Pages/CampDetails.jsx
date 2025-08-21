@@ -10,6 +10,7 @@ import { format } from "date-fns";
 import { AuthContext } from '../Providers/AuthProvider';
 import Modal from '../Utilities/Modal';
 import placeHolder from '../assets/images/placeholder.jpg';
+import PageTitle from '../Components/PageTitle';
 
 const CampDetails = () => {
     const { id } = useParams();
@@ -43,6 +44,8 @@ const CampDetails = () => {
 
     return (
         <div className="bg-base-200 min-h-screen py-8 px-4 sm:px-6">
+            <PageTitle title="Camp Details"></PageTitle>
+
             <div className="max-w-6xl mx-auto">
                 <div className="flex flex-col lg:flex-row gap-8">
                     {/* Image Section */}

@@ -3,6 +3,7 @@ import useAxiosSecure from '../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { FaArrowRight } from 'react-icons/fa';
 import ReactPaginate from 'react-paginate';
+import PageTitle from './PageTitle';
 
 const PaymentHistory = () => {
     const axiosSecure = useAxiosSecure();
@@ -31,6 +32,7 @@ const PaymentHistory = () => {
 
     return (
         <div className='mx-auto'>
+            <PageTitle title="Payment History"></PageTitle>
             <h2 className='font-bold text-3xl my-5'>Your Payment History</h2>
             <div className="overflow-x-auto border rounded-lg">
                 <table className="table table-zebra">

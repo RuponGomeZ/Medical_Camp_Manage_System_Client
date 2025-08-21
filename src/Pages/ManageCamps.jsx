@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import LoadingSpinner from '../Utilities/LoadingSpinner';
 import UpdateCampModal from '../Utilities/UpdateCampModal';
 import ReactPaginate from 'react-paginate';
+import PageTitle from '../Components/PageTitle';
 
 const ManageCamps = () => {
     const axiosSecure = useAxiosSecure();
@@ -62,6 +63,8 @@ const ManageCamps = () => {
 
     return (
         <div className="mx-auto max-w-5xl md:px-0">
+            <PageTitle title="Manage Camps"></PageTitle>
+
             <h2 className='font-bold text-2xl md:text-3xl my-6 md:my-10'>Manage Camps</h2>
 
             <div className="overflow-x-auto mr-0 md:mr-4">

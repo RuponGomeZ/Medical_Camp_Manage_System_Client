@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { AuthContext } from '../Providers/AuthProvider';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import PageTitle from '../Components/PageTitle';
 
 const AddACamp = () => {
     const [startDate, setStartDate] = useState(new Date());
@@ -65,6 +66,7 @@ const AddACamp = () => {
             onSubmit={handleSubmit(onSubmit)}
         >
             <h2 className='font-bold text-2xl my-6 underline'>Add A Camp</h2>
+            <PageTitle title="Add a Camp"></PageTitle>
 
             {/* Camp name */}
             <div>

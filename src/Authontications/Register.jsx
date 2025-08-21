@@ -4,6 +4,7 @@ import { AuthContext } from '../Providers/AuthProvider';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FaGooglePlus } from 'react-icons/fa';
+import PageTitle from '../Components/PageTitle';
 
 
 const Register = () => {
@@ -71,6 +72,8 @@ const Register = () => {
 
     return (
         <div className="hero bg-base-200 min-h-screen">
+            <PageTitle title="Register"></PageTitle>
+
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="text-center lg:text-left">
 

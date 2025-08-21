@@ -6,6 +6,7 @@ import FeedBackModal from '../Utilities/FeedBackModal';
 import MakePaymentModal from '../Components/MakePaymentModal';
 import { FaArrowRight } from 'react-icons/fa';
 import ReactPaginate from 'react-paginate';
+import PageTitle from '../Components/PageTitle';
 
 const RegisteredCamps = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -66,6 +67,8 @@ const RegisteredCamps = () => {
 
     return (
         <div className='mx-2 sm:mx-4 md:ml-20'>
+            <PageTitle title="Registered Camps"></PageTitle>
+
             <h2 className='font-bold text-xl sm:text-2xl md:text-3xl my-4 sm:my-6 md:my-10 text-center sm:text-left'>
                 Camps You Have Registered!
             </h2>
