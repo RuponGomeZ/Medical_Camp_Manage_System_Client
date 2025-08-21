@@ -54,7 +54,6 @@ const Dashboard = () => {
                 </div>
 
                 {/* Main content area */}
-                {/* <div className='flex-1 my-10 p-4 overflow-auto min-h-screen items-center '> */}
                 <div className='flex-1 my-10 p-4 overflow-auto min-h-screen'>
                     <Outlet />
                 </div>

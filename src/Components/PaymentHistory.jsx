@@ -20,7 +20,6 @@ const PaymentHistory = () => {
         }
     });
 
-    // Slice for current page
     const endOffset = itemOffset + itemsPerPage;
     const currentItems = paymentHistory.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(paymentHistory.length / itemsPerPage);

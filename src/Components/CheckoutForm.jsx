@@ -26,24 +26,7 @@ const CheckoutForm = ({ purchaseInfo, refetch, setIsOpen }) => {
 
     const clientSecret = paymentIntentData?.clientSecret;
 
-    console.log(clientSecret);
-    // useEffect(() => {
-    //     if (purchaseInfo?.campId && purchaseInfo?.price) {
-    //         getPaymentIntent()
-    //     }
-    // }, [])
 
-    // console.log(clientSecret);
-
-    // const getPaymentIntent = async () => {
-    //     try {
-    //         const { data } = await axiosSecure.post("/create-payment-intent", purchaseInfo)
-    //         setClientSecret(data.clientSecret);
-    //     }
-    //     catch (err) {
-
-    //     }
-    // }
 
     const stripe = useStripe();
     const elements = useElements();

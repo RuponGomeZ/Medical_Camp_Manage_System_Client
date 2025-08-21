@@ -82,7 +82,6 @@ const FeedBackModal = ({ isOpen, setIsOpen, registration }) => {
 
                         <div className="flex justify-end gap-2">
                             <button className="btn hover:bg-red-600 btn-sm" onClick={() => setIsOpen(false)}>Cancel</button>
-                            {/* <button className="btn btn-primary btn-sm" onClick={handleConfirm}>Confirm</button> */}
                         </div>
                     </Dialog.Panel>
                 </div>
