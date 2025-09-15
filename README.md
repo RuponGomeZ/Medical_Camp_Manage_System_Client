@@ -2,6 +2,10 @@
 
 This is the frontend for **Medico+**, a Campaign sharing web application that allows users to create, manage, book, and update Campaign. Built with Express.js and MongoDB, this RESTful API supports JWT-based authentication and secure CRUD operations.
 
+## 🌐 Live Demo
+
+The frontend application is live at: https://medical-camp-management-dda87.web.app/
+
 ## 📦 Features
 
 - 🔐 **JWT Authentication**
